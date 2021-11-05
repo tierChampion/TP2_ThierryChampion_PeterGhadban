@@ -1,4 +1,4 @@
-package ca.qc.bdeb.inf203.superMeduse;
+package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -40,7 +40,6 @@ public class GameObject {
         y += vy * deltaTime;
 
         x = Math.min(Math.max(x, minX), maxX - width);
-
     }
 
     /**
