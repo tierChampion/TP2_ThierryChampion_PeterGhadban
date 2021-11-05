@@ -59,6 +59,11 @@ public class GameObject {
         return false;
     }
 
-    public void render(GraphicsContext context) {}
+    public void render(GraphicsContext context) {
+
+        context.setFill(color);
+        context.fillRect(x, y, width, height);
+
+    }
 
 }
