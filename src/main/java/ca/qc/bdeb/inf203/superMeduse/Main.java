@@ -24,6 +24,5 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Super meduse");
         primaryStage.show();
-
     }
 }
