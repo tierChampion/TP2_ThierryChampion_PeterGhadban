@@ -4,8 +4,10 @@ import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,7 +34,7 @@ public class Main extends Application {
         var context = canvas.getGraphicsContext2D();
 
         Jellyfish jellyfish = new Jellyfish(0, 0,
-                0, 0, 1200, 20, 20, WINDOW_WIDTH, Color.BLUE);
+                0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
         var timer = new AnimationTimer() {
@@ -51,12 +53,26 @@ public class Main extends Application {
                 context.setFill(Color.BLACK);
                 context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+                jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
                 jellyfish.render(context);
 
                 lastTime = now;
             }
         };
+
+        scene.setOnKeyPressed((e) -> {
+            if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
+            else {
+                System.out.println(e.getCode());
+                Input.setKeyPressed(e.getCode(), true);
+            }
+        });
+
+        scene.setOnKeyReleased((e) -> {
+
+            Input.setKeyPressed(e.getCode(), false);
+        });
 
         timer.start();
 

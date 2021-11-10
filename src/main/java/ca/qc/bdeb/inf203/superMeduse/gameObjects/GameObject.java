@@ -39,8 +39,15 @@ public class GameObject {
         x += vx * deltaTime;
         y += vy * deltaTime;
 
-        x = Math.min(Math.max(x, minX), maxX - width);
+        if (x < minX || x + width > maxX) {
+            collisionMur();
+        }
         y = Math.min(Math.max(y, 0), 480 - height);
+    }
+
+    public void collisionMur() {
+        x = Math.min(Math.max(x, 0), maxX - width);
+        vx *= -0.9;
     }
 
     /**

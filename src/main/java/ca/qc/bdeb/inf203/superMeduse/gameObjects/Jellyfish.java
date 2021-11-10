@@ -1,9 +1,12 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
+import ca.qc.bdeb.inf203.superMeduse.Input;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
+import java.security.Key;
 import java.util.HashMap;
 
 public class Jellyfish extends GameObject {
@@ -15,8 +18,8 @@ public class Jellyfish extends GameObject {
     private static final int IMAGE_COUNT = 6;
 
     private int counter = 0;
-    private int phase = 0;
-    private int direction = 0;
+    private int phase = 1;
+    private int direction = 1;
 
     public Jellyfish(double x, double y,
                      double vx, double vy,
@@ -31,21 +34,50 @@ public class Jellyfish extends GameObject {
         super.update(deltaTime);
         counter++;
         if (counter % FRAME_PER_IMAGE == 0) {
-            phase = (phase + 1) % IMAGE_COUNT;
+            phase = (phase + 1) % IMAGE_COUNT + 1;
+            counter = 0;
+        }
+    }
+
+    @Override
+    public void collisionMur() {
+        super.collisionMur();
+        ax *= -1;
+        direction *= -1;
+    }
+
+    public void manageInputs() {
+
+        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) {
+            vy = -600; // jump
+        }
+
+        if (Input.isKeyPressed(KeyCode.LEFT)) {
+            ax = -1200; // left move
+            direction = -1;
+        } else if (Input.isKeyPressed(KeyCode.RIGHT)) {
+            ax = 1200; // right move
+            direction = 1;
+        } else if (Math.abs(vx) < 50) {
+            ax = 0;
+            vx = 0;
+        } else {
+            ax = (vx > 0) ? -1200 : 1200;
         }
     }
 
     @Override
     public void render(GraphicsContext context) {
-        context.drawImage(IMAGE_BANK.get(phase + direction * IMAGE_COUNT), x, y, width, height);
+
+        context.drawImage(IMAGE_BANK.get(phase * direction), x, y, width, height);
     }
 
     public static void buildBank() {
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i <= IMAGE_COUNT; i++) {
 
-            IMAGE_BANK.put(i, new Image("meduse" + (i + 1) + ".png"));
-            IMAGE_BANK.put(i + 6, new Image("meduse" + (i + 1) + "-g.png"));
+            IMAGE_BANK.put(i, new Image("meduse" + i + ".png"));
+            IMAGE_BANK.put(-i, new Image("meduse" + i + "-g.png"));
         }
     }
 }
