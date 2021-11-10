@@ -6,13 +6,13 @@ import javafx.scene.paint.Color;
 public class GameObject {
 
     // Physics
-    private double x, y;
-    private double vx, vy;
-    private double ax, ay;
-    private double width, height;
-    private double minX = 0, maxX;
+    protected double x, y;
+    protected double vx, vy;
+    protected double ax, ay;
+    protected double width, height;
+    protected double minX = 0, maxX;
     // Visual
-    private Color color;
+    protected Color color;
 
     public GameObject(double x, double y,
                       double vx, double vy,
@@ -40,6 +40,7 @@ public class GameObject {
         y += vy * deltaTime;
 
         x = Math.min(Math.max(x, minX), maxX - width);
+        y = Math.min(Math.max(y, 0), 480 - height);
     }
 
     /**
@@ -64,5 +65,4 @@ public class GameObject {
         context.fillRect(x, y, width, height);
 
     }
-
 }

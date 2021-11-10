@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -30,8 +31,9 @@ public class Main extends Application {
 
         var context = canvas.getGraphicsContext2D();
 
-        GameObject jellyfish = new GameObject(0, 0,
-                0, 0, 1200, 0, 20, 20, WINDOW_WIDTH, Color.BLUE);
+        Jellyfish jellyfish = new Jellyfish(0, 0,
+                0, 0, 1200, 20, 20, WINDOW_WIDTH, Color.BLUE);
+        Jellyfish.buildBank();
 
         var timer = new AnimationTimer() {
 
