@@ -98,6 +98,7 @@ public class Jellyfish extends GameObject {
         }
     }
 
-
-
+    public void setGrounded(boolean grounded) {
+        isGrounded = grounded;
+    }
 }
