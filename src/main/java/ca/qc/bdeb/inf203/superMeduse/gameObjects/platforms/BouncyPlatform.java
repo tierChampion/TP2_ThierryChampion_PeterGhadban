@@ -13,6 +13,7 @@ public class BouncyPlatform extends Platform{
     }
 
     public void effect(Jellyfish jelly){
+        jelly.setVy(Math.min(jelly.getVy() * -1.5, -100));
     }
 
 }
