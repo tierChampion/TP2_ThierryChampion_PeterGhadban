@@ -3,7 +3,7 @@ package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class GameObject {
+public abstract class GameObject {
 
     // Physics
     protected double x, y;
@@ -11,7 +11,6 @@ public class GameObject {
     protected double ax, ay;
     protected double width, height;
     protected double minX = 0, maxX;
-    protected double yes;
     // Visual
     protected Color color;
 
@@ -41,12 +40,12 @@ public class GameObject {
         y += vy * deltaTime;
 
         if (x < minX || x + width > maxX) {
-            collisionMur();
+            touchWall();
         }
         y = Math.min(Math.max(y, 0), 480 - height);
     }
 
-    public void collisionMur() {
+    public void touchWall() {
         x = Math.min(Math.max(x, 0), maxX - width);
         vx *= -0.9;
     }

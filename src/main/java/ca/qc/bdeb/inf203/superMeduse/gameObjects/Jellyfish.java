@@ -40,8 +40,8 @@ public class Jellyfish extends GameObject {
     }
 
     @Override
-    public void collisionMur() {
-        super.collisionMur();
+    public void touchWall() {
+        super.touchWall();
         ax *= -1;
         direction *= -1;
     }
