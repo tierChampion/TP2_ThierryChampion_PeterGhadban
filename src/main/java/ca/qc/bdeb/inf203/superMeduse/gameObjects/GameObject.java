@@ -11,6 +11,7 @@ public class GameObject {
     protected double ax, ay;
     protected double width, height;
     protected double minX = 0, maxX;
+    protected double yes;
     // Visual
     protected Color color;
 
