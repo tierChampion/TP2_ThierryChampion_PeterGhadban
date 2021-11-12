@@ -70,7 +70,6 @@ public class Main extends Application {
         scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
             else {
-                System.out.println(e.getCode());
                 Input.setKeyPressed(e.getCode(), true);
             }
         });
