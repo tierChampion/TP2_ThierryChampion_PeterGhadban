@@ -58,10 +58,7 @@ public class Main extends Application {
 
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
-
-                if (p.collision(jellyfish)) {
-                    System.out.println("AAAAA");
-                }
+                jellyfish.touchPlatform(p);
 
                 jellyfish.render(context);
                 p.render(context);
