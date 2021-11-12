@@ -8,7 +8,7 @@ public class SimplePlatform extends Platform{
                           double ax, double ay,
                           double w, double h,
                           double maxX){
-        super(x, y, vx, vy, ay, ax, w, h, maxX, Color.ORANGE);
+        super(x, y, vx, vy, ay, ax, w, h, maxX, Color.rgb(230, 134, 58));
     }
 
 }

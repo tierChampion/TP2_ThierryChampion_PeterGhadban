@@ -102,4 +102,6 @@ public class Jellyfish extends GameObject {
             IMAGE_BANK.put(-i, new Image("meduse" + i + "-g.png"));
         }
     }
+
+
 }

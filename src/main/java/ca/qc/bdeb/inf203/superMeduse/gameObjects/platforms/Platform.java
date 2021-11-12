@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.scene.paint.Color;
 
 public abstract class Platform extends GameObject {
@@ -12,15 +13,5 @@ public abstract class Platform extends GameObject {
         super(x, y, vx, vy, ax, ay, w, h, maxX, color);
     }
 
-    public boolean collision(GameObject o) {
-
-        if (o.getVy() > 0) {
-            if (o.getX() < x + width && o.getX() + o.getWidth() > x) {
-                if (o.getY() + o.getHeight() > y && o.getY() < y + height) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    public abstract void effect(Jellyfish jelly);
 }
