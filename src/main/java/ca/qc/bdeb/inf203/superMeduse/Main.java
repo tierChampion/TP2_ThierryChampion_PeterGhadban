@@ -38,7 +38,7 @@ public class Main extends Application {
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
-        SimplePlatform p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 20, WINDOW_WIDTH);
+        SimplePlatform p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
 
         var timer = new AnimationTimer() {
 

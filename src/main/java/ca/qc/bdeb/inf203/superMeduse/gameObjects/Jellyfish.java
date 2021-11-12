@@ -53,7 +53,7 @@ public class Jellyfish extends GameObject {
     public void touchPlatform(Platform p) {
         if (vy > 0) {
             if (x < p.x + p.width && x + width > p.x) {
-                if (y + height > p.y && y < p.y + p.height) {
+                if (y + height > p.y && y + height < p.y + p.height) {
 
                     y = p.y - height;
                     vy = 0;
