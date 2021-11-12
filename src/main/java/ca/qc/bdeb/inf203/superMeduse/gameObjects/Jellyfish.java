@@ -21,7 +21,7 @@ public class Jellyfish extends GameObject {
     private int counter = 0;
     private int phase = 1;
     private int direction = 1;
-    private boolean isGrounded;
+    private boolean isGrounded = true;
 
     public Jellyfish(double x, double y,
                      double vx, double vy,
@@ -29,7 +29,6 @@ public class Jellyfish extends GameObject {
                      double w, double h,
                      double maxX, Color color) {
         super(x, y, vx, vy, ax, GRAVITY, w, h, maxX, color);
-        this.isGrounded = false;
     }
 
     @Override
@@ -58,20 +57,16 @@ public class Jellyfish extends GameObject {
                     y = p.y - height;
                     vy = 0;
                     isGrounded = true;
-
-                    return;
                 }
             }
         }
-
-        isGrounded = false;
-        return;
     }
 
     public void manageInputs() {
 
-        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE) && isGrounded) {
+        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) { // add isGrounded
             vy = -600; // jump
+            isGrounded = false;
         }
 
         if (Input.isKeyPressed(KeyCode.LEFT)) {
