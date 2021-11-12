@@ -13,5 +13,10 @@ public abstract class Platform extends GameObject {
         super(x, y, vx, vy, ax, ay, w, h, maxX, color);
     }
 
-    public abstract void effect(Jellyfish jelly);
+    public  void effect(Jellyfish jelly) {
+        jelly.setGrounded(true);
+        jelly.setY(this.y - jelly.getHeight());
+        jelly.setVy(0);
+    }
+
 }

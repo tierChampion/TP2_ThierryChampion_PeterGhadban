@@ -71,4 +71,24 @@ public abstract class GameObject {
         context.setFill(color);
         context.fillRect(x, y, width, height);
     }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getVy() {
+        return vy;
+    }
+
+    public void setVy(double vy) {
+        this.vy = vy;
+    }
+
+    public double getHeight() {
+        return height;
+    }
 }

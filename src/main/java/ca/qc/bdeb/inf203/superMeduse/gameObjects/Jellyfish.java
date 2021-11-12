@@ -54,9 +54,7 @@ public class Jellyfish extends GameObject {
         if (vy > 0) {
             if (x < p.x + p.width && x + width > p.x) {
                 if (y + height > p.y && y + height < p.y + p.height) {
-                    y = p.y - height;
-                    vy = 0;
-                    isGrounded = true;
+                    p.effect(this);
                 }
             }
         }
@@ -101,4 +99,5 @@ public class Jellyfish extends GameObject {
     public void setGrounded(boolean grounded) {
         isGrounded = grounded;
     }
+
 }

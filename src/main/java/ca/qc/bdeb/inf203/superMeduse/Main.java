@@ -39,7 +39,7 @@ public class Main extends Application {
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
-        var p = new BouncyPlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
+        var p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
 
         var timer = new AnimationTimer() {
 

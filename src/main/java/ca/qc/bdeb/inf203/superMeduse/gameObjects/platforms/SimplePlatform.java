@@ -11,7 +11,5 @@ public class SimplePlatform extends Platform{
                           double maxX){
         super(x, y, vx, vy, ay, ax, w, h, maxX, Color.rgb(230, 134, 58));
     }
-    public void effect(Jellyfish jelly){
-    }
 
 }
