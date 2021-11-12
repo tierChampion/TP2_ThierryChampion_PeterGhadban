@@ -2,10 +2,7 @@ package ca.qc.bdeb.inf203.superMeduse;
 
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.MovingPlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.SimplePlatform;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.TemporaryPlatform;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -62,6 +59,9 @@ public class Main extends Application {
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
 
+                if (p.collision(jellyfish)) {
+                    System.out.println("AAAAA");
+                }
 
                 jellyfish.render(context);
                 p.render(context);

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
 import ca.qc.bdeb.inf203.superMeduse.Input;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -47,6 +48,20 @@ public class Jellyfish extends GameObject {
         super.touchWall();
         ax *= -1;
         direction *= -1;
+    }
+
+    public void touchPlatform(Platform p) {
+        if (vy > 0) {
+            if (x < p.x + p.width && x + width > p.x) {
+                if (y + height > p.y && y < p.y + p.height) {
+
+                    y = p.y - height;
+                    vy = 0;
+                    isGrounded = true;
+
+                }
+            }
+        }
     }
 
     public void manageInputs() {
