@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
 import ca.qc.bdeb.inf203.superMeduse.Input;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -53,7 +54,6 @@ public class Jellyfish extends GameObject {
         if (vy > 0) {
             if (x < p.x + p.width && x + width > p.x) {
                 if (y + height > p.y && y + height < p.y + p.height) {
-
                     y = p.y - height;
                     vy = 0;
                     isGrounded = true;
@@ -97,6 +97,7 @@ public class Jellyfish extends GameObject {
             IMAGE_BANK.put(-i, new Image("meduse" + i + "-g.png"));
         }
     }
+
 
 
 }

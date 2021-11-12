@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.scene.paint.Color;
 
 public class MovingPlatform extends Platform{
@@ -9,5 +10,7 @@ public class MovingPlatform extends Platform{
                           double w, double h,
                           double maxX){
         super(x, y, vx, vy, ay, ax, w, h, maxX, Color.rgb(184, 15, 36));
+    }
+    public void effect(Jellyfish jelly){
     }
 }
