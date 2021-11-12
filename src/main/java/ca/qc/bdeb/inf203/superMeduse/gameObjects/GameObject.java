@@ -72,6 +72,22 @@ public abstract class GameObject {
         context.fillRect(x, y, width, height);
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
     public double getVy() {
         return vy;
     }

@@ -12,10 +12,13 @@ public abstract class Platform extends GameObject {
         super(x, y, vx, vy, ax, ay, w, h, maxX, color);
     }
 
-    public void collision(GameObject o) {
+    public boolean collision(GameObject o) {
 
-        
+        if (o.getVy() < 0) {
 
+        }
+
+        return false;
     }
 
 }
