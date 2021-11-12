@@ -15,10 +15,13 @@ public abstract class Platform extends GameObject {
     public boolean collision(GameObject o) {
 
         if (o.getVy() < 0) {
+            if (o.getX() < x + width || o.getX() + o.getWidth() > x) {
 
+                if (o.getY() + o.getHeight() < y) {
+                    return true;
+                }
+            }
         }
-
         return false;
     }
-
 }
