@@ -11,4 +11,11 @@ public abstract class Platform extends GameObject {
                     double maxX, Color color) {
         super(x, y, vx, vy, ax, ay, w, h, maxX, color);
     }
+
+    public void collision(GameObject o) {
+
+        
+
+    }
+
 }

@@ -70,6 +70,9 @@ public abstract class GameObject {
 
         context.setFill(color);
         context.fillRect(x, y, width, height);
+    }
 
+    public double getVy() {
+        return vy;
     }
 }
