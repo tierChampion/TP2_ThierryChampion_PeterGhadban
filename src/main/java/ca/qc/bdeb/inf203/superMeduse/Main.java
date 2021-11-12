@@ -2,6 +2,7 @@ package ca.qc.bdeb.inf203.superMeduse;
 
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.SimplePlatform;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -37,6 +38,8 @@ public class Main extends Application {
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
+        SimplePlatform p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 20, WINDOW_WIDTH);
+
         var timer = new AnimationTimer() {
 
             private long lastTime = 0;
@@ -55,7 +58,13 @@ public class Main extends Application {
 
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
+
+                if (p.collision(jellyfish)) {
+                    System.out.println("AAAAA");
+                }
+
                 jellyfish.render(context);
+                p.render(context);
 
                 lastTime = now;
             }
