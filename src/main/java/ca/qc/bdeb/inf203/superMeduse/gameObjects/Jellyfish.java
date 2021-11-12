@@ -59,14 +59,18 @@ public class Jellyfish extends GameObject {
                     vy = 0;
                     isGrounded = true;
 
+                    return;
                 }
             }
         }
+
+        isGrounded = false;
+        return;
     }
 
     public void manageInputs() {
 
-        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) {
+        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE) && isGrounded) {
             vy = -600; // jump
         }
 
