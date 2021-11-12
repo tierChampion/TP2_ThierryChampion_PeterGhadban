@@ -10,4 +10,6 @@ public class BouncyPlatform extends Platform{
                           double maxX){
         super(x, y, vx, vy, ay, ax, w, h, maxX, Color.LIGHTGREEN);
     }
+
+
 }
