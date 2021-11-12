@@ -20,6 +20,7 @@ public class Jellyfish extends GameObject {
     private int counter = 0;
     private int phase = 1;
     private int direction = 1;
+    private boolean isGrounded;
 
     public Jellyfish(double x, double y,
                      double vx, double vy,
@@ -27,6 +28,7 @@ public class Jellyfish extends GameObject {
                      double w, double h,
                      double maxX, Color color) {
         super(x, y, vx, vy, ax, GRAVITY, w, h, maxX, color);
+        this.isGrounded = false;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class Jellyfish extends GameObject {
             phase = (phase + 1) % IMAGE_COUNT + 1;
             counter = 0;
         }
+
     }
 
     @Override
