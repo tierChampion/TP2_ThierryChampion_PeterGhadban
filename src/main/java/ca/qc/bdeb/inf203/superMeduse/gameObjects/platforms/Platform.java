@@ -17,7 +17,7 @@ public abstract class Platform extends GameObject {
         if (o.getVy() < 0) {
             if (o.getX() < x + width || o.getX() + o.getWidth() > x) {
 
-                if (o.getY() + o.getHeight() < y) {
+                if (o.getY() + o.getHeight() < y || o.getY() > y + height) {
                     return true;
                 }
             }
