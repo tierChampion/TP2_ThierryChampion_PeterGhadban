@@ -3,6 +3,7 @@ package ca.qc.bdeb.inf203.superMeduse;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.MovingPlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.SimplePlatform;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -39,7 +40,7 @@ public class Main extends Application {
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
-        var p = new BouncyPlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
+        var p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
 
         var timer = new AnimationTimer() {
 

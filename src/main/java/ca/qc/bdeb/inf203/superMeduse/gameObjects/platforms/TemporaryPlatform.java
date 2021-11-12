@@ -12,5 +12,6 @@ public class TemporaryPlatform extends Platform{
         super(x, y, vx, vy, ay, ax, w, h, maxX, Color.BLACK);
     }
     public void effect(Jellyfish jelly){
+
     }
 }

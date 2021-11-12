@@ -72,6 +72,8 @@ public abstract class GameObject {
         context.fillRect(x, y, width, height);
     }
 
+
+    //Getters and Setters
     public double getY() {
         return y;
     }
