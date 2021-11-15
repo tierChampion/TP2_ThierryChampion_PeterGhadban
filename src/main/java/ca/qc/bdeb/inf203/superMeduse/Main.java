@@ -86,7 +86,7 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image("meduse4.png"));
-        primaryStage.setTitle("Super meduse");
+        primaryStage.setTitle("Super Méduse Bros");
         primaryStage.setResizable(false);
         primaryStage.show();
     }
