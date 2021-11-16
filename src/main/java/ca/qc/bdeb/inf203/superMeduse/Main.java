@@ -42,6 +42,7 @@ public class Main extends Application {
         Jellyfish.buildBank();
 
         var p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
+        var p2 = new BouncyPlatform(100, 400, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
 
         var timer = new AnimationTimer() {
 
@@ -62,9 +63,11 @@ public class Main extends Application {
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
                 jellyfish.touchPlatform(p);
+                jellyfish.touchPlatform(p2);
 
                 jellyfish.render(context);
                 p.render(context);
+                p2.render(context);
 
                 lastTime = now;
             }
