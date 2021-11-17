@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 
 public class Camera {
@@ -31,6 +32,10 @@ public class Camera {
         if (jelly.getY() < maxJellyHeight) {
             y = jelly.getY() - HEIGHT / 4;
         }
+    }
+
+    public boolean isVisible(GameObject o) {
+        return o.getY() > y + HEIGHT;
     }
 
     public double getScreenX(double worldX) {

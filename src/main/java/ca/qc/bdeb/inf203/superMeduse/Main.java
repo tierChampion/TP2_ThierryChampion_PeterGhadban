@@ -1,9 +1,9 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
+
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.GamePlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.MovingPlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.SimplePlatform;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -15,6 +15,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -41,8 +43,10 @@ public class Main extends Application {
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
         Jellyfish.buildBank();
 
-        var p = new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
-        var p2 = new BouncyPlatform(100, 400, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH);
+        var platforms = new ArrayList<GamePlatform>();
+
+        platforms.add(new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH));
+        platforms.add(new BouncyPlatform(100, 400, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH));
 
         var timer = new AnimationTimer() {
 
@@ -62,12 +66,14 @@ public class Main extends Application {
 
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
-                jellyfish.touchPlatform(p);
-                jellyfish.touchPlatform(p2);
+                for (GamePlatform p : platforms) {
+                    jellyfish.touchPlatform(p);
+                }
 
                 jellyfish.render(context);
-                p.render(context);
-                p2.render(context);
+                for (GamePlatform p : platforms) {
+                    p.render(context);
+                }
 
                 lastTime = now;
             }

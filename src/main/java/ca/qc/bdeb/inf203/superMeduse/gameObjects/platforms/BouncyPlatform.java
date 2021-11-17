@@ -3,7 +3,7 @@ package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.scene.paint.Color;
 
-public class BouncyPlatform extends Platform{
+public class BouncyPlatform extends GamePlatform {
     public BouncyPlatform(double x, double y,
                           double vx, double vy,
                           double ax, double ay,

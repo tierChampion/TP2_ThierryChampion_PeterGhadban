@@ -2,7 +2,7 @@ package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 
 import javafx.scene.paint.Color;
 
-public class MovingPlatform extends Platform {
+public class MovingPlatform extends GamePlatform {
     private double totalTime;
     private double initialX;
     public MovingPlatform(double x, double y,

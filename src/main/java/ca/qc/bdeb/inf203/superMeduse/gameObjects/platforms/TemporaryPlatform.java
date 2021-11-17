@@ -3,7 +3,7 @@ package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import javafx.scene.paint.Color;
 
-public class TemporaryPlatform extends Platform{
+public class TemporaryPlatform extends GamePlatform {
 
     private boolean lastUsed = false; // is stepping on plat
     private boolean used = false; // ever stepped on plat
