@@ -64,7 +64,6 @@ public class Jellyfish extends GameObject {
 
         if ((Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) && isGrounded) { // add isGrounded
             vy = -600; // jump
-            isGrounded = false;
         }
 
         if (Input.isKeyPressed(KeyCode.LEFT)) {
@@ -79,6 +78,7 @@ public class Jellyfish extends GameObject {
         } else {
             ax = (vx > 0) ? -1200 : 1200;
         }
+        isGrounded = false;
     }
 
     @Override

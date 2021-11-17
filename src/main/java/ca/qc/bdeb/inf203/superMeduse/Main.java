@@ -1,6 +1,5 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
-
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.*;
 import javafx.animation.AnimationTimer;
@@ -42,10 +41,10 @@ public class Main extends Application {
 
         Random rng = new Random();
 
-        Camera camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, -2);
+        Camera camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, -5);
 
         Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
-                0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
+                0, 0, 0, 50, 50, WINDOW_WIDTH, Color.RED);
 
         var platforms = new ArrayList<GamePlatform>();
 
@@ -73,7 +72,7 @@ public class Main extends Application {
                 }
 
                 double deltaTime = (now - lastTime) * 1e-9;
-                context.setFill(Color.BLUE);
+                context.setFill(Color.DARKBLUE);
                 context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
                 jellyfish.manageInputs();
@@ -85,10 +84,11 @@ public class Main extends Application {
                 camera.update(deltaTime);
                 camera.adjustUpwards(jellyfish);
 
-                jellyfish.render(context, camera);
                 for (GamePlatform p : platforms) {
                     p.render(context, camera);
                 }
+                jellyfish.render(context, camera);
+
 
                 int p = 0;
                 while (p < platforms.size()) {
@@ -135,28 +135,28 @@ public class Main extends Application {
 
         if (type < 0.5) {
             platforms.add(new SimplePlatform(
-                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH),
                     height,
                     0, 0,
                     0, 0,
                     width, 10, WINDOW_WIDTH));
         } else if (type < 0.7) {
             platforms.add(new MovingPlatform(
-                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH),
                     height,
                     0, 0,
                     0, 0,
                     width, 10, WINDOW_WIDTH));
         } else if (type < 0.85) {
             platforms.add(new BouncyPlatform(
-                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH),
                     height,
                     0, 0,
                     0, 0,
                     width, 10, WINDOW_WIDTH));
         } else {
             platforms.add(new TemporaryPlatform(
-                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH),
                     height,
                     0, 0,
                     0, 0,
