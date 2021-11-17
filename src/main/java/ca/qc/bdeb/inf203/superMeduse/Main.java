@@ -7,9 +7,13 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,23 +35,18 @@ public class Main extends Application {
         Jellyfish.buildBank();
 
         var root = new Pane();
-
         var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
         var context = canvas.getGraphicsContext2D();
-
+        // Game logic creation
         Random rng = new Random();
-
         Camera camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, -5);
-
         Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.RED);
-
+        // Platform management
         var platforms = new ArrayList<GamePlatform>();
-
         platforms.add(new SimplePlatform((double)(WINDOW_WIDTH - 175) / 2, WINDOW_HEIGHT - 100,
                 0, 0,
                 0, 0,
@@ -56,7 +55,6 @@ public class Main extends Application {
         addPlatform(rng, WINDOW_HEIGHT - 300, platforms);
         addPlatform(rng, WINDOW_HEIGHT - 400, platforms);
         addPlatform(rng, WINDOW_HEIGHT - 500, platforms);
-
         final double[] nextHeight = {WINDOW_HEIGHT - 600};
 
         var timer = new AnimationTimer() {
@@ -72,9 +70,11 @@ public class Main extends Application {
                 }
 
                 double deltaTime = (now - lastTime) * 1e-9;
+                // Background
                 context.setFill(Color.DARKBLUE);
                 context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+                // Updating
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
                 for (GamePlatform p : platforms) {
@@ -84,12 +84,13 @@ public class Main extends Application {
                 camera.update(deltaTime);
                 camera.adjustUpwards(jellyfish);
 
+                // Rendering
                 for (GamePlatform p : platforms) {
                     p.render(context, camera);
                 }
                 jellyfish.render(context, camera);
 
-
+                // Out of bounds
                 int p = 0;
                 while (p < platforms.size()) {
                     if (camera.isNotVisible(platforms.get(p))) {
@@ -98,7 +99,6 @@ public class Main extends Application {
                         p++;
                     }
                 }
-
                 if (camera.getY() < nextHeight[0]) {
                     addPlatform(rng, nextHeight[0], platforms);
                     nextHeight[0] -= 100;
@@ -127,6 +127,24 @@ public class Main extends Application {
         primaryStage.setTitle("Super Méduse Bros");
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    private static Scene homePageScene() {
+        var root = new StackPane();
+        var homePage = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        root.getChildren().add(new ImageView("accueil.png"));
+
+        var buttons = new VBox();
+        var play = new Button("Jouer");
+        var scores = new Button("Meilleurs scores");
+
+        buttons.getChildren().addAll(play, scores);
+        root.getChildren().add(buttons);
+
+        // add scene changing property of play button
+
+        return homePage;
     }
 
     private void addPlatform(Random rng, double height, ArrayList<GamePlatform> platforms) {
