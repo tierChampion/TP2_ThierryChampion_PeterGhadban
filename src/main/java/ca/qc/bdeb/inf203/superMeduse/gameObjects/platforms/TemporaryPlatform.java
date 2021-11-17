@@ -30,6 +30,8 @@ public class TemporaryPlatform extends GamePlatform {
         lastUsed = false;
     }
 
+
+
     public void effect(Jellyfish jelly){
         lastUsed = true;
         used = true;

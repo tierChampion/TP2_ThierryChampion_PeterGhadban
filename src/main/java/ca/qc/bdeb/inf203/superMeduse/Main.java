@@ -2,9 +2,7 @@ package ca.qc.bdeb.inf203.superMeduse;
 
 
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.GamePlatform;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.SimplePlatform;
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main extends Application {
 
@@ -29,6 +28,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // FAIRE RESOURCE MANAGER
+        Jellyfish.buildBank();
 
         var root = new Pane();
 
@@ -39,14 +40,21 @@ public class Main extends Application {
 
         var context = canvas.getGraphicsContext2D();
 
-        Jellyfish jellyfish = new Jellyfish(0, 0,
+        Random rng = new Random();
+
+        Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
-        Jellyfish.buildBank();
 
         var platforms = new ArrayList<GamePlatform>();
 
-        platforms.add(new SimplePlatform(200, 200, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH));
-        platforms.add(new BouncyPlatform(100, 400, 0, 0, 0, 0, 200, 10, WINDOW_WIDTH));
+        platforms.add(new SimplePlatform((double)(WINDOW_WIDTH - 175) / 2, WINDOW_HEIGHT - 100,
+                0, 0,
+                0, 0,
+                175, 10, WINDOW_WIDTH));
+        addPlatform(rng, WINDOW_HEIGHT - 200, platforms);
+        addPlatform(rng, WINDOW_HEIGHT - 300, platforms);
+        addPlatform(rng, WINDOW_HEIGHT - 400, platforms);
+        addPlatform(rng, WINDOW_HEIGHT - 500, platforms);
 
         var timer = new AnimationTimer() {
 
@@ -61,12 +69,13 @@ public class Main extends Application {
                 }
 
                 double deltaTime = (now - lastTime) * 1e-9;
-                context.setFill(Color.BLACK);
+                context.setFill(Color.BLUE);
                 context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
                 jellyfish.manageInputs();
                 jellyfish.update(deltaTime);
                 for (GamePlatform p : platforms) {
+                    p.update(deltaTime);
                     jellyfish.touchPlatform(p);
                 }
 
@@ -100,5 +109,38 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void addPlatform(Random rng, double height, ArrayList<GamePlatform> platforms) {
+        double type = rng.nextDouble();
+        double width = rng.nextDouble() * (175 - 85) + 85;
 
+        if (type < 0.5) {
+            platforms.add(new SimplePlatform(
+                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    height,
+                    0, 0,
+                    0, 0,
+                    width, 10, WINDOW_WIDTH));
+        } else if (type < 0.7) {
+            platforms.add(new MovingPlatform(
+                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    height,
+                    0, 0,
+                    0, 0,
+                    width, 10, WINDOW_WIDTH));
+        } else if (type < 0.85) {
+            platforms.add(new BouncyPlatform(
+                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    height,
+                    0, 0,
+                    0, 0,
+                    width, 10, WINDOW_WIDTH));
+        } else {
+            platforms.add(new TemporaryPlatform(
+                    Math.max(0, Math.min(WINDOW_WIDTH - width, rng.nextDouble() * WINDOW_WIDTH)),
+                    height,
+                    0, 0,
+                    0, 0,
+                    width, 10, WINDOW_WIDTH));
+        }
+    }
 }
