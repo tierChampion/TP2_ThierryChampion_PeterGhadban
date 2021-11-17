@@ -36,4 +36,3 @@ public class TemporaryPlatform extends Platform{
         super.effect(jelly);
     }
 }
-
