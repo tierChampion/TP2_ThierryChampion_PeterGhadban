@@ -1,20 +1,19 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
 import ca.qc.bdeb.inf203.superMeduse.Input;
-import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.BouncyPlatform;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import java.security.Key;
 import java.util.HashMap;
 
 public class Jellyfish extends GameObject {
 
     private static final double GRAVITY = 1200;
-
+    private static final double LOW_SPEED = 50;
+    private static final double HIGH_SPEED = 800;
     private static final HashMap<Integer, Image> IMAGE_BANK = new HashMap<>();
     private static final int FRAME_PER_IMAGE = 8;
     private static final int IMAGE_COUNT = 6;
@@ -53,7 +52,7 @@ public class Jellyfish extends GameObject {
     public void touchPlatform(Platform p) {
         if (vy > 0) {
             if (x < p.x + p.width && x + width > p.x &&
-            y + height > p.y && y + height < p.y + p.height) {
+            y + height > p.y && y + (vy > HIGH_SPEED ? 0 : height) < p.y + p.height) {
                 p.effect(this);
             }
         }
@@ -72,7 +71,7 @@ public class Jellyfish extends GameObject {
         } else if (Input.isKeyPressed(KeyCode.RIGHT)) {
             ax = 1200; // right move
             direction = 1;
-        } else if (Math.abs(vx) < 50) {
+        } else if (Math.abs(vx) < LOW_SPEED) {
             ax = 0;
             vx = 0;
         } else {
