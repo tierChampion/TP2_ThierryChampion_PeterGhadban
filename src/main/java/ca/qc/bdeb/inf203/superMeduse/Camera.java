@@ -34,7 +34,7 @@ public class Camera {
         }
     }
 
-    public boolean isVisible(GameObject o) {
+    public boolean isNotVisible(GameObject o) {
         return o.getY() > y + HEIGHT;
     }
 
@@ -44,5 +44,9 @@ public class Camera {
 
     public double getScreenY(double worldY) {
         return worldY - y;
+    }
+
+    public double getY() {
+        return y;
     }
 }

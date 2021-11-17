@@ -17,7 +17,7 @@ public class MovingPlatform extends GamePlatform {
     public void update(double deltaTime){
         super.update(deltaTime);
         totalTime+=deltaTime;
-        x = initialX + Math.sin( 2 * totalTime ) * 25;
+        x = initialX + Math.sin( 2 * totalTime ) * 150;
     }
 }
 

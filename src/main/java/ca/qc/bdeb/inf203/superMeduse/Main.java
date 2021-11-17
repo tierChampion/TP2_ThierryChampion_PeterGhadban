@@ -42,6 +42,8 @@ public class Main extends Application {
 
         Random rng = new Random();
 
+        Camera camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, -2);
+
         Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.BLUE);
 
@@ -55,6 +57,8 @@ public class Main extends Application {
         addPlatform(rng, WINDOW_HEIGHT - 300, platforms);
         addPlatform(rng, WINDOW_HEIGHT - 400, platforms);
         addPlatform(rng, WINDOW_HEIGHT - 500, platforms);
+
+        final double[] nextHeight = {WINDOW_HEIGHT - 600};
 
         var timer = new AnimationTimer() {
 
@@ -78,10 +82,26 @@ public class Main extends Application {
                     p.update(deltaTime);
                     jellyfish.touchPlatform(p);
                 }
+                camera.update(deltaTime);
+                camera.adjustUpwards(jellyfish);
 
-                jellyfish.render(context);
+                jellyfish.render(context, camera);
                 for (GamePlatform p : platforms) {
-                    p.render(context);
+                    p.render(context, camera);
+                }
+
+                int p = 0;
+                while (p < platforms.size()) {
+                    if (camera.isNotVisible(platforms.get(p))) {
+                        platforms.remove(p);
+                    } else {
+                        p++;
+                    }
+                }
+
+                if (camera.getY() < nextHeight[0]) {
+                    addPlatform(rng, nextHeight[0], platforms);
+                    nextHeight[0] -= 100;
                 }
 
                 lastTime = now;

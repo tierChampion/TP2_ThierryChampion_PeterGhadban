@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
+import ca.qc.bdeb.inf203.superMeduse.Camera;
 import ca.qc.bdeb.inf203.superMeduse.Input;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.GamePlatform;
 import javafx.scene.canvas.GraphicsContext;
@@ -54,13 +55,14 @@ public class Jellyfish extends GameObject {
             if (x < p.x + p.width && x + width > p.x &&
             y + height > p.y && y + (vy > HIGH_SPEED ? 0 : height) < p.y + p.height) {
                 p.effect(this);
+                isGrounded = true;
             }
         }
     }
 
     public void manageInputs() {
 
-        if (Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) { // add isGrounded
+        if ((Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) && isGrounded) { // add isGrounded
             vy = -600; // jump
             isGrounded = false;
         }
@@ -80,9 +82,10 @@ public class Jellyfish extends GameObject {
     }
 
     @Override
-    public void render(GraphicsContext context) {
+    public void render(GraphicsContext context, Camera camera) {
 
-        context.drawImage(IMAGE_BANK.get(phase * direction), x, y, width, height);
+        context.drawImage(IMAGE_BANK.get(phase * direction), camera.getScreenX(x), camera.getScreenY(y),
+                width, height);
     }
 
     public static void buildBank() {

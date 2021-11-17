@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects;
 
+import ca.qc.bdeb.inf203.superMeduse.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -42,7 +43,6 @@ public abstract class GameObject {
         if (x < minX || x + width > maxX) {
             touchWall();
         }
-        y = Math.min(Math.max(y, 0), 480 - height);
     }
 
     public void touchWall() {
@@ -50,26 +50,10 @@ public abstract class GameObject {
         vx *= -0.9;
     }
 
-    /**
-     * Determines if this game object intersects another game object
-     * @param o
-     * @return if there is an intersection
-     */
-    public boolean intersects(GameObject o) {
-
-        if (x < o.x + o.width || x + width > o.x) {
-            if (y < o.y + o.height || y + height < o.y) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void render(GraphicsContext context) {
+    public void render(GraphicsContext context, Camera camera) {
 
         context.setFill(color);
-        context.fillRect(x, y, width, height);
+        context.fillRect(camera.getScreenX(x), camera.getScreenY(y), width, height);
     }
 
 
