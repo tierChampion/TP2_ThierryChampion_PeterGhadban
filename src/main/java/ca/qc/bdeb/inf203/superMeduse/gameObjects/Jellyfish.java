@@ -84,7 +84,7 @@ public class Jellyfish extends GameObject {
     @Override
     public void render(GraphicsContext context, Camera camera) {
 
-        context.drawImage(IMAGE_BANK.get(phase * direction), camera.getScreenX(x), camera.getScreenY(y),
+        context.drawImage(IMAGE_BANK.get(phase * direction),x, camera.getScreenY(y),
                 width, height);
     }
 

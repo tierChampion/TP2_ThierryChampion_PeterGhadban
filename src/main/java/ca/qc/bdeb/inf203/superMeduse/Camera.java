@@ -5,12 +5,11 @@ import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 
 public class Camera {
 
-    private final double WIDTH, HEIGHT;
+    private final double HEIGHT;
     private double x, y;
     private double vy, ay;
 
-    public Camera(double w, double h, double x, double y, double vy, double ay) {
-        this.WIDTH = w;
+    public Camera(double h, double x, double y, double vy, double ay) {
         this.HEIGHT = h;
         this.x = x;
         this.y = y;
@@ -36,10 +35,6 @@ public class Camera {
 
     public boolean isNotVisible(GameObject o) {
         return o.getY() > y + HEIGHT;
-    }
-
-    public double getScreenX(double worldX) {
-        return worldX - x;
     }
 
     public double getScreenY(double worldY) {

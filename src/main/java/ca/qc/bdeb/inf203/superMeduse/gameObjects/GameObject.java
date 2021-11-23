@@ -53,7 +53,7 @@ public abstract class GameObject {
     public void render(GraphicsContext context, Camera camera) {
 
         context.setFill(color);
-        context.fillRect(camera.getScreenX(x), camera.getScreenY(y), width, height);
+        context.fillRect(x, camera.getScreenY(y), width, height);
     }
 
 

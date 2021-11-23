@@ -25,24 +25,28 @@ public class Main extends Application {
     private static final int WINDOW_WIDTH = 350;
     private static final int WINDOW_HEIGHT = 480;
 
+    private static Scene GAME;
+    private static Scene HOME;
+    private static Scene SCORE;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         // FAIRE RESOURCE MANAGER
         Jellyfish.buildBank();
 
         var root = new Pane();
-        var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        GAME = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
         var context = canvas.getGraphicsContext2D();
         // Game logic creation
         Random rng = new Random();
-        Camera camera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 0, -5);
+        Camera camera = new Camera(WINDOW_HEIGHT, 0, 0, 0, -2);
         Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.RED);
         // Platform management
@@ -108,30 +112,34 @@ public class Main extends Application {
             }
         };
 
-        scene.setOnKeyPressed((e) -> {
+        GAME.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
             else {
                 Input.setKeyPressed(e.getCode(), true);
             }
         });
 
-        scene.setOnKeyReleased((e) -> {
+        GAME.setOnKeyReleased((e) -> {
 
             Input.setKeyPressed(e.getCode(), false);
         });
 
+        homePageScene(stage);
+
         timer.start();
 
-        primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image("meduse4.png"));
-        primaryStage.setTitle("Super Méduse Bros");
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        stage.setScene(HOME);
+        stage.getIcons().add(new Image("meduse4.png"));
+        stage.setTitle("Super Méduse Bros");
+        stage.setResizable(false);
+        stage.show();
     }
 
-    private static Scene homePageScene() {
+    private static void homePageScene(Stage stage) {
         var root = new StackPane();
         var homePage = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        HOME = homePage;
 
         root.getChildren().add(new ImageView("accueil.png"));
 
@@ -139,12 +147,16 @@ public class Main extends Application {
         var play = new Button("Jouer");
         var scores = new Button("Meilleurs scores");
 
+        play.setOnAction((e) -> {
+            stage.setScene(GAME);
+        });
+
+        scores.setOnAction((e) -> {
+            stage.setScene(SCORE);
+        });
+
         buttons.getChildren().addAll(play, scores);
         root.getChildren().add(buttons);
-
-        // add scene changing property of play button
-
-        return homePage;
     }
 
     private void addPlatform(Random rng, double height, ArrayList<GamePlatform> platforms) {
