@@ -26,6 +26,18 @@ import java.util.Random;
 
 public class Main extends Application {
 
+    /*
+    TODO:
+    - Move game controller in class Game. This includes both the animation timer and giving some elements of the
+    scene to the class (graphicsContext and score)
+    - Add death
+    - Add bubbles
+    - Make the score scene work with a result file.
+    - Make a second result scene with a way to add your score with your name
+    - Make the score board editable to add your own record (or add a button)
+    ** Probably keep the scores in a simple hashmap so they are sorted and then on load and on close work with the files
+     */
+
     private static final int WINDOW_WIDTH = 350;
     private static final int WINDOW_HEIGHT = 480;
 
