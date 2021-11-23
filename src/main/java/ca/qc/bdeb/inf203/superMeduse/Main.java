@@ -10,15 +10,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class Main extends Application {
 
         var context = gameScene();
         homePageScene(stage);
-
+        scoreScene(stage);
 
         // Game logic creation
         Random rng = new Random();
@@ -123,11 +123,19 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Creates the scene used to play the game.
+     * @return graphics context of the canvas of the scene
+     */
     private static GraphicsContext gameScene() {
-        var root = new Pane();
+        var root = new StackPane();
         GAME = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        root.getChildren().add(canvas);
+        var score = new Text("SCORE GOES HERE (UPDATE IN GAME CLASS)");
+        score.setFill(Color.WHITE);
+        score.setFont(Font.font(40));
+        root.getChildren().addAll(canvas, score);
+        root.setAlignment(Pos.TOP_CENTER);
 
         GAME.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
@@ -144,6 +152,10 @@ public class Main extends Application {
         return canvas.getGraphicsContext2D();
     }
 
+    /**
+     * Creates the scene representing the home page.
+     * @param stage
+     */
     private static void homePageScene(Stage stage) {
 
         // Scene and root
@@ -159,24 +171,52 @@ public class Main extends Application {
         // Image and buttons
         var visuals = new VBox();
         var backgroundImg = new ImageView("accueil.png");
-        var play = new Button("Jouer!");
-        play.setFont(Font.font(15));
-        var scores = new Button("Meilleurs scores");
-        scores.setFont(Font.font(15));
+        var toGame = new Button("Jouer!");
+        toGame.setFont(Font.font(15));
+        var toScores = new Button("Meilleurs scores");
+        toScores.setFont(Font.font(15));
 
         // Events
-        play.setOnAction((e) -> {
+        toGame.setOnAction((e) -> {
             stage.setScene(GAME);
         });
-        scores.setOnAction((e) -> {
+        toScores.setOnAction((e) -> {
             stage.setScene(SCORE);
         });
 
-        visuals.getChildren().addAll(backgroundImg, play, scores);
+        visuals.getChildren().addAll(backgroundImg, toGame, toScores);
         visuals.setAlignment(Pos.BASELINE_CENTER);
         visuals.setSpacing(20);
         root.getChildren().addAll(canvas, visuals);
         root.setPadding(new Insets(40));
+    }
+
+    /**
+     * Creates the scene used to show the high scores.
+     * @see <a href="https://devstory.net/11063/javafx-listview">...</a> -> source for ListView
+     * @param stage
+     */
+    private static void scoreScene(Stage stage) {
+        var root = new VBox();
+        SCORE = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        var title = new Text("Meilleurs scores");
+        title.setFont(Font.font(40));
+
+        var scores = new ListView<>();
+        // load elements from file
+        //scores.getItems().addAll(new Text("ALLO"), new Text("ALLO"), new Text("ALLO"), new Text("ALLO"));
+
+        var toHome = new Button("Retourner à l'accueil");
+
+        toHome.setOnAction((e) -> {
+            stage.setScene(HOME);
+        });
+
+        root.getChildren().addAll(title, scores, toHome);
+        root.setAlignment(Pos.TOP_CENTER);
+        root.setSpacing(20);
+        root.setPadding(new Insets(20));
     }
 
     private void addPlatform(Random rng, double height, ArrayList<GamePlatform> platforms) {
