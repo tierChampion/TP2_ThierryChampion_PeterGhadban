@@ -46,7 +46,7 @@ public class Jellyfish extends GameObject {
     @Override
     public void touchWall() {
         super.touchWall();
-        ax *= -1;
+        ax *= -0.8;
         direction *= -1;
     }
 
