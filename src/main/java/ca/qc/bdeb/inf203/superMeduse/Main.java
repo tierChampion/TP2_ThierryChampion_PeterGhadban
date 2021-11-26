@@ -60,7 +60,7 @@ public class Main extends Application {
 
         // Game logic creation
         Random rng = new Random();
-        Camera camera = new Camera(WINDOW_HEIGHT, 0, 0, 0, -2);
+        Camera camera = new Camera(WINDOW_HEIGHT, 0, 0, -2);
         Jellyfish jellyfish = new Jellyfish((double)(WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
                 0, 0, 0, 50, 50, WINDOW_WIDTH, Color.RED);
         // Platform management

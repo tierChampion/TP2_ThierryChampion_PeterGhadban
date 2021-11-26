@@ -6,12 +6,11 @@ import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 public class Camera {
 
     private final double HEIGHT;
-    private double x, y;
+    private double y;
     private double vy, ay;
 
-    public Camera(double h, double x, double y, double vy, double ay) {
+    public Camera(double h, double y, double vy, double ay) {
         this.HEIGHT = h;
-        this.x = x;
         this.y = y;
         this.vy = vy;
         this.ay = ay;
