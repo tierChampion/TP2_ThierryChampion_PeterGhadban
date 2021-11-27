@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
+import ca.qc.bdeb.inf203.superMeduse.gameObjects.Bubble;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.*;
 import javafx.animation.AnimationTimer;
@@ -31,6 +32,7 @@ public class Game {
     private Jellyfish player;
     // bubbles
     private ArrayList<GamePlatform> platforms;
+    private ArrayList<Bubble> bubbles;
     private final double[] highestPlatform = new double[] {0};
     private Random rng;
     private AnimationTimer timer;
@@ -70,6 +72,7 @@ public class Game {
                 camera.adjustUpwards(player);
 
                 // Rendering
+
                 for (GamePlatform p : platforms) {
                     p.render(context, camera);
                 }
@@ -161,6 +164,15 @@ public class Game {
         highestPlatform[0] -= 100;
     }
 
+    private void addBubbles(){
+        double baseX;
+
+        for (int i =0; i<3; i++){
+
+            baseX = rng.nextDouble()*WINDOW_WIDTH
+        }
+
+    }
     /**
      * Creates the scene used to play the game.
      * @return graphics context of the canvas of the scene
