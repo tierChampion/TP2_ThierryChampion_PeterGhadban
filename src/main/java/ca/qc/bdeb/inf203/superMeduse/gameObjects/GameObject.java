@@ -56,6 +56,10 @@ public abstract class GameObject {
         context.fillRect(x, camera.getScreenY(y), width, height);
     }
 
+    public void renderBubble(GraphicsContext context, Camera camera){
+        context.setFill(color);
+        context.fillOval(x, camera.getScreenY(y), width, height);
+    }
 
     //Getters and Setters
     public double getY() {

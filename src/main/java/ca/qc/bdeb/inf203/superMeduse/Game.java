@@ -87,6 +87,10 @@ public class Game {
                         p++;
                     }
                 }
+                for (Bubble bubble : bubbles){
+
+                        bubbles.remove(bubble);
+                }
                 if (camera.getY() < highestPlatform[0]) {
                     addPlatform(rng, platforms);
                 }
@@ -165,11 +169,16 @@ public class Game {
     }
 
     private void addBubbles(){
-        double baseX;
+        double baseX, bubbleX, bubbleVY, bubbleDiameter;
 
         for (int i =0; i<3; i++){
-
-            baseX = rng.nextDouble()*WINDOW_WIDTH
+            baseX = rng.nextDouble()*(WINDOW_WIDTH-40);
+            for (int j = 0; j<5; j++){
+                bubbleX = (rng.nextDouble()*40)-20+baseX;
+                bubbleVY = (rng.nextDouble()*100)+350;
+                bubbleDiameter = (rng.nextDouble()*30)+10;
+                bubbles.add(new Bubble(bubbleX,0, bubbleVY,bubbleDiameter, WINDOW_WIDTH));
+            }
         }
 
     }

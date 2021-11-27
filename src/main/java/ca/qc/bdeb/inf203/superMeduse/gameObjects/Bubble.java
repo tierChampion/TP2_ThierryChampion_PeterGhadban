@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 public class Bubble extends GameObject{
 
     public Bubble(double x, double y,
-                  double vy, double ay,
-                  double diameter, double maxX){
-        super(x, y, 0.00, vy, 0.00, ay, diameter, diameter, maxX,
+                  double vy, double diameter,
+                  double maxX){
+        super(x, y, 0.00, vy, 0.00, 0, diameter, diameter, maxX,
                 Color.rgb(0, 0, 255, 0.4));
 
     }
