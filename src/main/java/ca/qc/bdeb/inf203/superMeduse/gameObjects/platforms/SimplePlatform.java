@@ -4,11 +4,8 @@ import javafx.scene.paint.Color;
 
 public class SimplePlatform extends GamePlatform {
     public SimplePlatform(double x, double y,
-                          double vx, double vy,
-                          double ax, double ay,
-                          double w,
-                          double maxX){
-        super(x, y, vx, vy, ay, ax, w, maxX, Color.rgb(230, 134, 58));
+                          double w){
+        super(x, y, w, Color.rgb(230, 134, 58));
     }
 
 }

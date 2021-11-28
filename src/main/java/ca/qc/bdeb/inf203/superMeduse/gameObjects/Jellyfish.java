@@ -14,7 +14,7 @@ public class Jellyfish extends GameObject {
 
     private static final double GRAVITY = 1200;
     private static final double LOW_SPEED = 50;
-    private static final double HIGH_SPEED = 800;
+    private static final double HIGH_SPEED = 600;
     private static final HashMap<Integer, Image> IMAGE_BANK = new HashMap<>();
     private static final int FRAME_PER_IMAGE = 8;
     private static final int IMAGE_COUNT = 6;

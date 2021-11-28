@@ -5,16 +5,14 @@ import javafx.scene.paint.Color;
 
 public class TemporaryPlatform extends GamePlatform {
 
+    private static final double FALL_SPEED = 200;
     private boolean lastUsed = false; // is stepping on plat
     private boolean used = false; // ever stepped on plat
     private boolean dead = false; // jumped off plat
 
     public TemporaryPlatform(double x, double y,
-                             double vx, double vy,
-                             double ax, double ay,
-                             double w,
-                             double maxX){
-        super(x, y, vx, vy, ay, ax, w, maxX, Color.BLACK);
+                             double w){
+        super(x, y, w, Color.BLACK);
     }
 
     @Override
@@ -22,7 +20,7 @@ public class TemporaryPlatform extends GamePlatform {
 
         if (used && !lastUsed) {
             dead = true;
-            vy = 200;
+            vy = FALL_SPEED;
         }
         if (dead) {
             super.update(deltaTime);

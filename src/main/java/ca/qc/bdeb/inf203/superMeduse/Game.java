@@ -72,7 +72,6 @@ public class Game {
                 camera.adjustUpwards(player);
 
                 // Rendering
-
                 for (GamePlatform p : platforms) {
                     p.render(context, camera);
                 }
@@ -123,9 +122,7 @@ public class Game {
         highestPlatform[0] = WINDOW_HEIGHT - 200;
         platforms = new ArrayList<>();
         platforms.add(new SimplePlatform((WINDOW_WIDTH - 175) / 2, WINDOW_HEIGHT - 100,
-                0, 0,
-                0, 0,
-                175, WINDOW_WIDTH));
+                175));
         addPlatform();
         addPlatform();
         addPlatform();
@@ -142,30 +139,22 @@ public class Game {
             platforms.add(new SimplePlatform(
                     x,
                     highestPlatform[0],
-                    0, 0,
-                    0, 0,
-                    width, WINDOW_WIDTH));
+                    width));
         } else if (type < 0.7) {
             platforms.add(new MovingPlatform(
                     x,
                     highestPlatform[0],
-                    0, 0,
-                    0, 0,
-                    width, WINDOW_WIDTH));
+                    width));
         } else if (type < 0.85) {
             platforms.add(new BouncyPlatform(
                     x,
                     highestPlatform[0],
-                    0, 0,
-                    0, 0,
-                    width, WINDOW_WIDTH));
+                    width));
         } else {
             platforms.add(new TemporaryPlatform(
                     x,
                     highestPlatform[0],
-                    0, 0,
-                    0, 0,
-                    width, WINDOW_WIDTH));
+                    width));
         }
 
         highestPlatform[0] -= 100;

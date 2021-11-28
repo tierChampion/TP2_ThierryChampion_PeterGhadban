@@ -5,11 +5,8 @@ import javafx.scene.paint.Color;
 
 public class BouncyPlatform extends GamePlatform {
     public BouncyPlatform(double x, double y,
-                          double vx, double vy,
-                          double ax, double ay,
-                          double w,
-                          double maxX){
-        super(x, y, vx, vy, ay, ax, w, maxX, Color.LIGHTGREEN);
+                          double w){
+        super(x, y, w, Color.LIGHTGREEN);
     }
 
     public void effect(Jellyfish jelly){
