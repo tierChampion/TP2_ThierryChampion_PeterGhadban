@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -23,17 +24,19 @@ public class Game {
 
     private final double WINDOW_WIDTH;
     private final double WINDOW_HEIGHT;
+    private static final double BUBBLE_CLUSTER_DELTA = 20, BUBBLE_CLUSTER_COUNT = 3, BUBBLE_CLUSTER_SIZE = 5;
 
     private Scene game;
     private GraphicsContext context;
     private Text score;
+    private Text deathMessage;
 
     private Camera camera;
     private Jellyfish player;
     // bubbles
     private ArrayList<GamePlatform> platforms;
     private ArrayList<Bubble> bubbles;
-    private final double[] highestPlatform = new double[] {0};
+    private final double[] highestPlatform = new double[]{0};
     private Random rng;
     private AnimationTimer timer;
 
@@ -47,6 +50,7 @@ public class Game {
         this.timer = new AnimationTimer() {
 
             private long lastTime = 0;
+            private double bubbleTime = 0;
 
             @Override
             public void handle(long now) {
@@ -57,6 +61,7 @@ public class Game {
                 }
 
                 double deltaTime = (now - lastTime) * 1e-9;
+                bubbleTime += deltaTime;
                 // Background
                 context.setFill(Color.DARKBLUE);
                 context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -68,13 +73,16 @@ public class Game {
                     p.update(deltaTime);
                     player.touchPlatform(p);
                 }
+                for (Bubble b : bubbles) {
+                    b.update(deltaTime);
+                }
                 camera.update(deltaTime);
                 camera.adjustUpwards(player);
 
                 // Rendering
-                for (GamePlatform p : platforms) {
-                    p.render(context, camera);
-                }
+                for (Bubble b : bubbles) b.render(context, camera);
+
+                for (GamePlatform p : platforms) p.render(context, camera);
                 player.render(context, camera);
 
                 // Out of bounds
@@ -86,7 +94,7 @@ public class Game {
                         p++;
                     }
                 }
-                /*
+
                 int b = 0;
                 while (b < bubbles.size()) {
                     if (camera.isNotVisible(bubbles.get(b))) {
@@ -95,11 +103,15 @@ public class Game {
                         b++;
                     }
                 }
-                */
-                if (camera.getY() < highestPlatform[0] + 10) addPlatform(); // platform width
+
+                if (camera.getY() < highestPlatform[0] + GamePlatform.PLATFORM_THICKNESS) addPlatform();
+                if (bubbleTime >= 3) {
+                    addBubbles();
+                    bubbleTime = 0;
+                }
 
                 if (camera.isNotVisible(player)) endGame();
-                score.setText(-(int)camera.getY() + "px");
+                score.setText(-(int) camera.getY() + "px");
                 lastTime = now;
             }
         };
@@ -111,6 +123,7 @@ public class Game {
     }
 
     public void endGame() {
+        deathMessage.setVisible(true);
         timer.stop();
     }
 
@@ -126,6 +139,8 @@ public class Game {
         addPlatform();
         addPlatform();
         addPlatform();
+
+        bubbles = new ArrayList<>();
 
         gameScene();
     }
@@ -160,33 +175,41 @@ public class Game {
         highestPlatform[0] -= 100;
     }
 
-    private void addBubbles(){
-        double baseX, bubbleX, bubbleVY, bubbleDiameter;
+    private void addBubbles() {
 
-        for (int i =0; i<3; i++){
-            baseX = rng.nextDouble()*(WINDOW_WIDTH-40);
-            for (int j = 0; j<5; j++){
-                bubbleX = (rng.nextDouble()*40)-20+baseX;
-                bubbleVY = (rng.nextDouble()*100)+350;
-                bubbleDiameter = (rng.nextDouble()*30)+10;
-                bubbles.add(new Bubble(bubbleX,0, bubbleVY,bubbleDiameter, WINDOW_WIDTH));
+        for (int i = 0; i < BUBBLE_CLUSTER_COUNT; i++) {
+            double baseX = rng.nextDouble() * (WINDOW_WIDTH);
+            for (int j = 0; j < BUBBLE_CLUSTER_SIZE; j++) {
+                double bubbleX = (rng.nextDouble() * 2 * BUBBLE_CLUSTER_DELTA) - BUBBLE_CLUSTER_DELTA + baseX;
+                double bubbleVY = ((rng.nextDouble() * (Bubble.MAX_SPEED - Bubble.MIN_SPEED)) + Bubble.MIN_SPEED);
+                double bubbleDiameter = (rng.nextDouble() * (Bubble.MAX_DIAMETER - Bubble.MIN_DIAMETER)) +
+                        Bubble.MIN_DIAMETER;
+                bubbles.add(new Bubble(bubbleX, camera.getY() + WINDOW_HEIGHT - bubbleDiameter / 2,
+                        bubbleVY, bubbleDiameter));
             }
         }
-
     }
+
     /**
      * Creates the scene used to play the game.
+     *
      * @return graphics context of the canvas of the scene
      */
     private void gameScene() {
         var root = new StackPane();
         game = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.score = new Text(-(int)camera.getY() + "px");
+        this.score = new Text(-(int) camera.getY() + "px");
         score.setFill(Color.WHITE);
         score.setFont(Font.font(40));
-        root.getChildren().addAll(canvas, score);
-        root.setAlignment(Pos.TOP_CENTER);
+        this.deathMessage = new Text("Partie Terminée");
+        deathMessage.setFill(Color.RED);
+        deathMessage.setFont(Font.font(40));
+        deathMessage.setVisible(false);
+        var texts = new VBox(score, deathMessage);
+        texts.setAlignment(Pos.TOP_CENTER);
+        texts.setSpacing(150);
+        root.getChildren().addAll(canvas, texts);
 
         game.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();

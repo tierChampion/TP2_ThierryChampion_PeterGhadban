@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 public abstract class GamePlatform extends GameObject {
 
-    private static final double PLATFORM_THICKNESS = 10;
+    public static final double PLATFORM_THICKNESS = 10;
 
     public GamePlatform(double x, double y,
                         double w, Color color) {

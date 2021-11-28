@@ -20,14 +20,13 @@ public class Main extends Application {
 
     /*
     TODO:
-    - Move game controller in class Game. This includes both the animation timer and giving some elements of the
-    scene to the class (graphicsContext and score)
-    - Add death
-    - Add bubbles
-    - Make the score scene work with a result file.
-    - Make a second result scene with a way to add your score with your name
-    - Make the score board editable to add your own record (or add a button)
-    ** Probably keep the scores in a simple hashmap so they are sorted and then on load and on close work with the files
+    - Make the death change scene after 3 seconds in game (give game access to SCORE)
+    - ** Create a score scene class that will take care of playing with the files and managing the score scene **
+    (To see if needed)
+    - Make a second score scene with an option to add your score (or make the edit bar visible in existing scene?)
+    - Deal with the files
+    - Add debug mode (print bunch of stuff, show the jellyfish hitbox and change the color of the platforms)
+    Need to add these feature to the rendering of jellyfish and platforms
      */
 
     private static final int WINDOW_WIDTH = 350;
