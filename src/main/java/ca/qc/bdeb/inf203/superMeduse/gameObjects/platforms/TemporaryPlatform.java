@@ -12,9 +12,9 @@ public class TemporaryPlatform extends GamePlatform {
     public TemporaryPlatform(double x, double y,
                              double vx, double vy,
                              double ax, double ay,
-                             double w, double h,
+                             double w,
                              double maxX){
-        super(x, y, vx, vy, ay, ax, w, h, maxX, Color.BLACK);
+        super(x, y, vx, vy, ay, ax, w, maxX, Color.BLACK);
     }
 
     @Override

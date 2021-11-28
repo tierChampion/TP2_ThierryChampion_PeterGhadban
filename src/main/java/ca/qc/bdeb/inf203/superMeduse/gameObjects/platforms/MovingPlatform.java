@@ -8,9 +8,9 @@ public class MovingPlatform extends GamePlatform {
     public MovingPlatform(double x, double y,
                           double vx, double vy,
                           double ax, double ay,
-                          double w, double h,
+                          double w,
                           double maxX) {
-        super(x, y, vx, vy, ay, ax, w, h, maxX, Color.rgb(184, 15, 36));
+        super(x, y, vx, vy, ay, ax, w, maxX, Color.rgb(184, 15, 36));
         this.initialX = x;
     }
 

@@ -33,7 +33,7 @@ public class Camera {
     }
 
     public boolean isNotVisible(GameObject o) {
-        return o.getY() > y + HEIGHT;
+        return o.getY() > y + HEIGHT || o.getY() + o.getHeight() < y;
     }
 
     public double getScreenY(double worldY) {

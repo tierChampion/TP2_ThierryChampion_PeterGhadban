@@ -87,13 +87,17 @@ public class Game {
                         p++;
                     }
                 }
-                for (Bubble bubble : bubbles){
-
-                        bubbles.remove(bubble);
+                /*
+                int b = 0;
+                while (b < bubbles.size()) {
+                    if (camera.isNotVisible(bubbles.get(b))) {
+                        bubbles.remove(b);
+                    } else {
+                        b++;
+                    }
                 }
-                if (camera.getY() < highestPlatform[0]) {
-                    addPlatform(rng, platforms);
-                }
+                */
+                if (camera.getY() < highestPlatform[0] + 10) addPlatform(); // platform width
 
                 if (camera.isNotVisible(player)) endGame();
                 score.setText(-(int)camera.getY() + "px");
@@ -121,16 +125,15 @@ public class Game {
         platforms.add(new SimplePlatform((WINDOW_WIDTH - 175) / 2, WINDOW_HEIGHT - 100,
                 0, 0,
                 0, 0,
-                175, 10, WINDOW_WIDTH));
-        addPlatform(rng, platforms);
-        addPlatform(rng, platforms);
-        addPlatform(rng, platforms);
-        addPlatform(rng, platforms);
+                175, WINDOW_WIDTH));
+        addPlatform();
+        addPlatform();
+        addPlatform();
 
         gameScene();
     }
 
-    private void addPlatform(Random rng, ArrayList<GamePlatform> platforms) {
+    private void addPlatform() {
         double type = rng.nextDouble();
         double width = rng.nextDouble() * (175 - 85) + 85;
         double x = rng.nextDouble() * (WINDOW_WIDTH - width);
@@ -141,28 +144,28 @@ public class Game {
                     highestPlatform[0],
                     0, 0,
                     0, 0,
-                    width, 10, WINDOW_WIDTH));
+                    width, WINDOW_WIDTH));
         } else if (type < 0.7) {
             platforms.add(new MovingPlatform(
                     x,
                     highestPlatform[0],
                     0, 0,
                     0, 0,
-                    width, 10, WINDOW_WIDTH));
+                    width, WINDOW_WIDTH));
         } else if (type < 0.85) {
             platforms.add(new BouncyPlatform(
                     x,
                     highestPlatform[0],
                     0, 0,
                     0, 0,
-                    width, 10, WINDOW_WIDTH));
+                    width, WINDOW_WIDTH));
         } else {
             platforms.add(new TemporaryPlatform(
                     x,
                     highestPlatform[0],
                     0, 0,
                     0, 0,
-                    width, 10, WINDOW_WIDTH));
+                    width, WINDOW_WIDTH));
         }
 
         highestPlatform[0] -= 100;

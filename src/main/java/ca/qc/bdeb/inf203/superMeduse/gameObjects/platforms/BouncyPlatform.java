@@ -7,9 +7,9 @@ public class BouncyPlatform extends GamePlatform {
     public BouncyPlatform(double x, double y,
                           double vx, double vy,
                           double ax, double ay,
-                          double w, double h,
+                          double w,
                           double maxX){
-        super(x, y, vx, vy, ay, ax, w, h, maxX, Color.LIGHTGREEN);
+        super(x, y, vx, vy, ay, ax, w, maxX, Color.LIGHTGREEN);
     }
 
     public void effect(Jellyfish jelly){
