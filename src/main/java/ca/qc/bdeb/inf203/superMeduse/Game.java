@@ -21,27 +21,29 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
-
+    // Constants
     private final double WINDOW_WIDTH;
     private final double WINDOW_HEIGHT;
     private static final double BUBBLE_CLUSTER_DELTA = 20, BUBBLE_CLUSTER_COUNT = 3, BUBBLE_CLUSTER_SIZE = 5;
-
+    // Visual interface
     private final Stage stage;
     private Scene game;
     private final Scene results;
     private GraphicsContext context;
     private Text score;
     private Text deathMessage;
-
+    // Game camera and game loop
     private Camera camera;
+    private AnimationTimer timer;
+    // Game entities
     private Jellyfish player;
-    private boolean isGameDone;
-    // bubbles
     private ArrayList<GamePlatform> platforms;
     private ArrayList<Bubble> bubbles;
+    // Game data variables
     private final double[] highestPlatform = new double[]{0};
+    private boolean isGameDone;
+    // Utility
     private Random rng;
-    private AnimationTimer timer;
 
     public Game(double windowW, double windowH, Stage stage, Scene results) {
 
@@ -50,29 +52,40 @@ public class Game {
         rng = new Random();
         this.stage = stage;
         this.results = results;
-        init();
         gameScene();
-        initTimer();
+
     }
 
+    /**
+     * Used to begin playing the game in its initial state
+     */
     public void startGame() {
+        init();
+        initGameLoop();
         stage.setScene(game);
         timer.start();
     }
 
+    /**
+     * Used to manage the death of the player
+     */
     private void endGame() {
         deathMessage.setVisible(true);
         isGameDone = true;
     }
 
+    /**
+     * Used to manage the scene change after death
+     */
     private void exitGame() {
-        init();
         deathMessage.setVisible(false);
         stage.setScene(results);
         timer.stop();
-        initTimer();
     }
 
+    /**
+     * Initialises the entities and the game logic
+     */
     private void init() {
         camera = new Camera(WINDOW_HEIGHT, 0, 0, -2);
         player = new Jellyfish((WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
@@ -90,7 +103,10 @@ public class Game {
         isGameDone = false;
     }
 
-    private void initTimer() {
+    /**
+     * Initialises the game loop.
+     */
+    private void initGameLoop() {
         this.timer = new AnimationTimer() {
 
             private long lastTime = 0;
@@ -176,6 +192,9 @@ public class Game {
         };
     }
 
+    /**
+     * Adds a random platform in the game.
+     */
     private void addPlatform() {
         double type = rng.nextDouble();
         double width = rng.nextDouble() * (175 - 85) + 85;
@@ -206,6 +225,9 @@ public class Game {
         highestPlatform[0] -= 100;
     }
 
+    /**
+     * Adds random clusters of bubbles into the background of the game.
+     */
     private void addBubbles() {
 
         for (int i = 0; i < BUBBLE_CLUSTER_COUNT; i++) {
@@ -230,7 +252,7 @@ public class Game {
         var root = new StackPane();
         game = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.score = new Text(-(int) camera.getY() + "px");
+        this.score = new Text("0px");
         score.setFill(Color.WHITE);
         score.setFont(Font.font(40));
         this.deathMessage = new Text("Partie Terminée");
