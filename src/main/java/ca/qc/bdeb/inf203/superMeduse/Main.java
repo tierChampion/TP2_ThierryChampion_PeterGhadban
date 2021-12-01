@@ -50,7 +50,6 @@ public class Main extends Application {
         scoreScene(stage);
         game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, SCORE);
 
-
         stage.setScene(HOME);
         stage.getIcons().add(new Image("meduse4.png"));
         stage.setTitle("Super Méduse Bros");
