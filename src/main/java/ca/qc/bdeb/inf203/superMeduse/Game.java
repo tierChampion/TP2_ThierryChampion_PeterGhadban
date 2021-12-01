@@ -57,7 +57,6 @@ public class Game {
     }
 
     public void startGame() {
-        System.out.println(isGameDone);
         stage.setScene(game);
         timer.start();
     }

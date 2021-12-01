@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -109,16 +110,25 @@ public class Main extends Application {
         title.setFont(Font.font(40));
 
         var scores = new ListView<>();
-        // load elements from file
-        //scores.getItems().addAll(new Text("ALLO"), new Text("ALLO"), new Text("ALLO"), new Text("ALLO"));
+        // load elements from file TODO
+
+        var nameTag = new Text("Nom:");
+        var nameEntry = new TextField();
+        var save = new Button("Sauvegarder");
+
+        var saveScore = new HBox(nameTag, nameEntry, save);
 
         var toHome = new Button("Retourner à l'accueil");
+
+        var options = new VBox(saveScore, toHome);
+        options.setSpacing(20);
+        options.setAlignment(Pos.CENTER);
 
         toHome.setOnAction((e) -> {
             stage.setScene(HOME);
         });
 
-        root.getChildren().addAll(title, scores, toHome);
+        root.getChildren().addAll(title, scores, options);
         root.setAlignment(Pos.TOP_CENTER);
         root.setSpacing(20);
         root.setPadding(new Insets(20));
