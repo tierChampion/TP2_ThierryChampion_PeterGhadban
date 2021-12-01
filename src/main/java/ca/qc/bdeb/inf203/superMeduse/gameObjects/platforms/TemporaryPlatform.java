@@ -15,6 +15,11 @@ public class TemporaryPlatform extends GamePlatform {
         super(x, y, w, Color.BLACK);
     }
 
+    /**
+     * Updates like a normal platform except that if it was previously stepped on but is not being stepped on,
+     * the platform is considered dead and will start falling
+     * @param deltaTime elapsed time
+     */
     @Override
     public void update(double deltaTime) {
 
@@ -28,8 +33,10 @@ public class TemporaryPlatform extends GamePlatform {
         lastUsed = false;
     }
 
-
-
+    /**
+     * Acts like a regular platform but keeps in mind that the jelly fish stepped on it
+     * @param jelly jellyfish to apply the effect on
+     */
     public void effect(Jellyfish jelly){
         lastUsed = true;
         used = true;

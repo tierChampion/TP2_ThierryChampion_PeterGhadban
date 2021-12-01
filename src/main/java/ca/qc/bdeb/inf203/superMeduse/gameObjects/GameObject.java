@@ -33,32 +33,27 @@ public abstract class GameObject {
         this.color = color;
     }
 
+    /**
+     * Calculates how the object moves around
+     * @param deltaTime elapsed time
+     */
     public void update(double deltaTime) {
 
         vx += ax * deltaTime;
         vy += ay * deltaTime;
         x += vx * deltaTime;
         y += vy * deltaTime;
-
-        if (x < minX || x + width > maxX) {
-            touchWall();
-        }
     }
 
-    public void touchWall() {
-        x = Math.min(Math.max(x, 0), maxX - width);
-        vx *= -0.9;
-    }
-
+    /**
+     * Describes how the object is shown on the canvas
+     * @param context
+     * @param camera
+     */
     public void render(GraphicsContext context, Camera camera) {
 
         context.setFill(color);
         context.fillRect(x, camera.getScreenY(y), width, height);
-    }
-
-    public void renderBubble(GraphicsContext context, Camera camera){
-        context.setFill(color);
-        context.fillOval(x, camera.getScreenY(y), width, height);
     }
 
     //Getters and Setters

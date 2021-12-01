@@ -32,13 +32,26 @@ public class Camera {
         }
     }
 
+    /**
+     * Determines if the object is currently being shown by the camera,
+     * if it is within the visual bounds
+     * @param o object to test
+     * @return if it isn't visible
+     */
     public boolean isNotVisible(GameObject o) {
-        return o.getY() > y + HEIGHT || o.getY() + o.getHeight() < y;
+        return !(o.getY() <= y + HEIGHT) || !(o.getY() + o.getHeight() >= y);
     }
 
+    /**
+     * Transforms a given y coordinate into a corresponding screen coordinate
+     * @param worldY
+     * @return it's y position on the screen
+     */
     public double getScreenY(double worldY) {
         return worldY - y;
     }
+
+    // getter
 
     public double getY() {
         return y;

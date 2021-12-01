@@ -3,6 +3,7 @@ package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 import javafx.scene.paint.Color;
 
 public class MovingPlatform extends GamePlatform {
+
     private double totalTime;
     private double initialX;
     public MovingPlatform(double x, double y,
@@ -11,6 +12,10 @@ public class MovingPlatform extends GamePlatform {
         this.initialX = x;
     }
 
+    /**
+     * Moves from left to right in a sinusoidal way
+     * @param deltaTime elapsed time
+     */
     public void update(double deltaTime){
         super.update(deltaTime);
         totalTime+=deltaTime;

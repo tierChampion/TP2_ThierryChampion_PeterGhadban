@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
 
 public class Game {
 
@@ -102,7 +101,6 @@ public class Game {
             public void handle(long now) {
 
                 if (lastTime == 0) {
-                    System.out.println("ALLO");
                     lastTime = now;
                     return;
                 }
@@ -112,12 +110,12 @@ public class Game {
                 if (isGameDone) {
 
                     deathTime += deltaTime;
+
                     if (deathTime >= 3) {
                         lastTime = 0;
                         deathTime = 0;
                         bubbleTime = 0;
                         exitGame();
-
                     }
                 } else {
                     bubbleTime += deltaTime;

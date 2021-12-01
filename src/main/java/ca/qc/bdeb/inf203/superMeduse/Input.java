@@ -4,6 +4,9 @@ import javafx.scene.input.KeyCode;
 
 import java.util.HashMap;
 
+/**
+ * Class used to keep track of what keys are being used on the keyboard
+ */
 public class Input {
 
     private static HashMap<KeyCode, Boolean> touches = new HashMap<>();

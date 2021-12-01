@@ -16,9 +16,6 @@ public class Bubble extends GameObject{
     }
 
     @Override
-    public void touchWall() {}
-
-    @Override
     public void render(GraphicsContext context, Camera camera) {
         context.setFill(color);
         context.fillOval(x, camera.getScreenY(y), width, height);

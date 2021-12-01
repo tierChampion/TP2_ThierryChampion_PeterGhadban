@@ -35,6 +35,10 @@ public class Jellyfish extends GameObject {
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
+
+        if (x < minX || x + width > maxX) {
+            touchWall();
+        }
         counter++;
         if (counter % FRAME_PER_IMAGE == 0) {
             phase = (phase + 1) % IMAGE_COUNT + 1;
@@ -43,13 +47,20 @@ public class Jellyfish extends GameObject {
 
     }
 
-    @Override
+    /**
+     * Describes how the jellyfish reacts to touching a wall.
+     */
     public void touchWall() {
-        super.touchWall();
+        x = Math.min(Math.max(x, 0), maxX - width);
+        vx *= -0.9;
         ax *= -0.8;
         direction *= -1;
     }
 
+    /**
+     * Check for collision with platform
+     * @param p platform to test
+     */
     public void touchPlatform(GamePlatform p) {
         if (vy > 0) {
             if (x < p.x + p.width && x + width > p.x &&
@@ -60,12 +71,14 @@ public class Jellyfish extends GameObject {
         }
     }
 
+    /**
+     * Manage how the jellyfish reacts to inputs
+     */
     public void manageInputs() {
 
-        if ((Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) && isGrounded) { // add isGrounded
+        if ((Input.isKeyPressed(KeyCode.UP) || Input.isKeyPressed(KeyCode.SPACE)) && isGrounded) {
             vy = -600; // jump
         }
-
         if (Input.isKeyPressed(KeyCode.LEFT)) {
             ax = -1200; // left move
             direction = -1;
@@ -88,6 +101,13 @@ public class Jellyfish extends GameObject {
                 width, height);
     }
 
+    public void setGrounded(boolean grounded) {
+        isGrounded = grounded;
+    }
+
+    /**
+     * Builds the image bank used to render the jellyfish
+     */
     public static void buildBank() {
 
         for (int i = 1; i <= IMAGE_COUNT; i++) {
@@ -96,9 +116,4 @@ public class Jellyfish extends GameObject {
             IMAGE_BANK.put(-i, new Image("meduse" + i + "-g.png"));
         }
     }
-
-    public void setGrounded(boolean grounded) {
-        isGrounded = grounded;
-    }
-
 }
