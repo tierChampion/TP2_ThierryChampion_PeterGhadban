@@ -45,9 +45,10 @@ public class Main extends Application {
         // FAIRE RESOURCE MANAGER
         Jellyfish.buildBank();
 
-        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
         homePageScene(stage);
         scoreScene(stage);
+        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, SCORE);
+
 
         stage.setScene(HOME);
         stage.getIcons().add(new Image("meduse4.png"));
@@ -82,7 +83,7 @@ public class Main extends Application {
 
         // Events
         toGame.setOnAction((e) -> {
-            game.startGame(stage);
+            game.startGame();
         });
         toScores.setOnAction((e) -> {
             stage.setScene(SCORE);
