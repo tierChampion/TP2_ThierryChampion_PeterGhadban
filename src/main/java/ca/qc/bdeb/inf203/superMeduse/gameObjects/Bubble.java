@@ -16,7 +16,7 @@ public class Bubble extends GameObject{
     }
 
     @Override
-    public void render(GraphicsContext context, Camera camera) {
+    public void render(GraphicsContext context, Camera camera, boolean debug) {
         context.setFill(color);
         context.fillOval(x, camera.getScreenY(y), width, height);
     }

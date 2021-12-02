@@ -95,11 +95,16 @@ public class Jellyfish extends GameObject {
     }
 
     @Override
-    public void render(GraphicsContext context, Camera camera) {
-
+    public void render(GraphicsContext context, Camera camera, boolean debug) {
+        if (debug) {
+            context.setFill(Color.rgb(255, 0, 0, 0.5));
+            context.fillRect(x, camera.getScreenY(y), width, height);
+        }
         context.drawImage(IMAGE_BANK.get(phase * direction),x, camera.getScreenY(y),
                 width, height);
     }
+
+    public boolean getGrounded() {return isGrounded;}
 
     public void setGrounded(boolean grounded) {
         isGrounded = grounded;

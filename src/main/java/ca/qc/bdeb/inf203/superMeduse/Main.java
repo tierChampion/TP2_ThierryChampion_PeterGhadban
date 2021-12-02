@@ -20,13 +20,8 @@ public class Main extends Application {
 
     /*
     TODO:
-    - Make the death change scene after 3 seconds in game (give game access to SCORE)
-    - ** Create a score scene class that will take care of playing with the files and managing the score scene **
-    (To see if needed)
-    - Make a second score scene with an option to add your score (or make the edit bar visible in existing scene?)
-    - Deal with the files
-    - Add debug mode (print bunch of stuff, show the jellyfish hitbox and change the color of the platforms)
-    Need to add these feature to the rendering of jellyfish and platforms
+    - Make so only the stepped on platform becomes yellow (add a parameter to platform)
+    - Add inputs for escape and t (debug mode) in every scene
      */
 
     private static final int WINDOW_WIDTH = 350;
@@ -45,7 +40,7 @@ public class Main extends Application {
         // FAIRE RESOURCE MANAGER
         Jellyfish.buildBank();
 
-        homePageScene(stage);
+        homePageScene();
         score = new ScoreBoard(WINDOW_WIDTH, WINDOW_HEIGHT, stage, home);
         game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score);
 
@@ -58,9 +53,8 @@ public class Main extends Application {
 
     /**
      * Creates the scene representing the home page.
-     * @param stage
      */
-    private static void homePageScene(Stage stage) {
+    private static void homePageScene() {
 
         // Scene and root
         var root = new StackPane();

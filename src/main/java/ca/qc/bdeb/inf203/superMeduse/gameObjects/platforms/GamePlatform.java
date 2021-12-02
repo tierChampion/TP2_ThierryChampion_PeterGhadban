@@ -1,7 +1,9 @@
 package ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms;
 
+import ca.qc.bdeb.inf203.superMeduse.Camera;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
@@ -26,4 +28,9 @@ public abstract class GamePlatform extends GameObject {
         jelly.setVy(0);
     }
 
+    @Override
+    public void render(GraphicsContext context, Camera camera, boolean debug) {
+        context.setFill(debug ? Color.YELLOW : color);
+        context.fillRect(x, camera.getScreenY(y), width, height);
+    }
 }

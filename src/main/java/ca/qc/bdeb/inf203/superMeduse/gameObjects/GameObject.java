@@ -50,27 +50,38 @@ public abstract class GameObject {
      * @param context
      * @param camera
      */
-    public void render(GraphicsContext context, Camera camera) {
+    public void render(GraphicsContext context, Camera camera, boolean debug) {
 
         context.setFill(color);
         context.fillRect(x, camera.getScreenY(y), width, height);
     }
 
-    //Getters and Setters
+    // Getters and setters
+    public double getX() {
+        return x;
+    }
     public double getY() {
         return y;
     }
-
     public void setY(double y) {
         this.y = y;
     }
 
+    public double getVx() {
+        return vx;
+    }
     public double getVy() {
         return vy;
     }
-
     public void setVy(double vy) {
         this.vy = vy;
+    }
+
+    public double getAx() {
+        return ax;
+    }
+    public double getAy() {
+        return ay;
     }
 
     public double getHeight() {

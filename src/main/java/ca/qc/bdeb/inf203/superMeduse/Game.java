@@ -31,6 +31,7 @@ public class Game {
     private GraphicsContext context;
     private Text score;
     private Text deathMessage;
+    private Text debugInfo;
     // Game camera and game loop
     private Camera camera;
     private AnimationTimer timer;
@@ -41,6 +42,7 @@ public class Game {
     // Game data variables
     private final double[] highestPlatform = new double[]{0};
     private boolean isGameDone;
+    private boolean debugMode = false;
     // Utility
     private Random rng;
 
@@ -52,7 +54,6 @@ public class Game {
         this.stage = stage;
         this.results = results;
         gameScene();
-
     }
 
     /**
@@ -141,6 +142,7 @@ public class Game {
 
                     // Updating
                     player.manageInputs();
+                    if (Input.isKeyPressed(KeyCode.T)) debugMode = !debugMode;
                     player.update(deltaTime);
                     for (GamePlatform p : platforms) {
                         p.update(deltaTime);
@@ -153,10 +155,10 @@ public class Game {
                     camera.adjustUpwards(player);
 
                     // Rendering
-                    for (Bubble b : bubbles) b.render(context, camera);
+                    for (Bubble b : bubbles) b.render(context, camera, debugMode);
 
-                    for (GamePlatform p : platforms) p.render(context, camera);
-                    player.render(context, camera);
+                    for (GamePlatform p : platforms) p.render(context, camera, debugMode);
+                    player.render(context, camera, debugMode);
 
                     // Out of bounds
                     int p = 0;
@@ -184,12 +186,20 @@ public class Game {
                     }
 
                     if (camera.isNotVisible(player)) endGame();
-                    score.setText(-(int) camera.getY() + "px");
+                    updateInformation();
                 }
 
                 lastTime = now;
             }
         };
+    }
+
+    private void updateInformation() {
+        score.setText(-(int) camera.getY() + "px");
+        debugInfo.setText("Position = (" + player.getX() + ", " + player.getY() + ")\n" +
+                "Vitesse = (" + player.getVx() + ", " + player.getVy() + ")\n" +
+                "Accélération = (" + player.getAx() + ", " + player.getAy() + ")\n" +
+                "Touche au sol? " + (player.getGrounded() ? "oui" : "non"));
     }
 
     /**
@@ -252,9 +262,11 @@ public class Game {
         var root = new StackPane();
         scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.score = new Text("0px");
+
+        this.score = new Text();
         score.setFill(Color.WHITE);
         score.setFont(Font.font(40));
+
         this.deathMessage = new Text("Partie Terminée");
         deathMessage.setFill(Color.RED);
         deathMessage.setFont(Font.font(40));
@@ -262,7 +274,12 @@ public class Game {
         var texts = new VBox(score, deathMessage);
         texts.setAlignment(Pos.TOP_CENTER);
         texts.setSpacing(150);
-        root.getChildren().addAll(canvas, texts);
+
+        debugInfo = new Text();
+        debugInfo.setFill(Color.WHITE);
+
+        root.getChildren().addAll(canvas, texts, debugInfo);
+        root.setAlignment(Pos.TOP_LEFT);
 
         scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
