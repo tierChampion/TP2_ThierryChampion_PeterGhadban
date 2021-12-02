@@ -12,10 +12,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class ScoreBoard {
+
+    private static final String SAVE_FILE = "scoreboard.dat";
 
     private final double WINDOW_WIDTH, WINDOW_HEIGHT;
     // Visual components
@@ -36,6 +39,7 @@ public class ScoreBoard {
         this.HOME = home;
         this.data = new ArrayList<>();
         scoreScene();
+        updateListView();
     }
 
     private void scoreScene() {
@@ -80,12 +84,17 @@ public class ScoreBoard {
         data.add(new LeaderBoardElement(entry.getText(), currentScore));
         data.sort(Comparator.comparing(LeaderBoardElement::getScore));
 
+        updateListView();
+
+        scoreEntry.setVisible(false);
+        saveToFile();
+    }
+
+    private void updateListView() {
         leaderBoard.getItems().clear();
         for (int i = 0; i < data.size(); i++) {
             leaderBoard.getItems().add("#" + (i + 1) + " -- " + data.get(data.size() - (i + 1)));
         }
-
-        scoreEntry.setVisible(false);
     }
 
     public void accessScoreScene(boolean onDeath) {
@@ -98,11 +107,30 @@ public class ScoreBoard {
     }
 
     public void loadFromFile() {
-        System.out.println("NOT DONE YET!");
+
+        try (FileInputStream reader = new FileInputStream(SAVE_FILE)) {
+
+            ObjectInputStream ois = new ObjectInputStream(reader);
+
+            this.data = (ArrayList<LeaderBoardElement>) ois.readObject();
+
+        } catch (IOException e) {
+            System.err.println("Problems occured while trying to read the data file!");
+        } catch (ClassNotFoundException e) {
+            System.err.println("The object saved in the data file is not of the right type!");
+        }
     }
 
     private void saveToFile() {
 
+        try (FileOutputStream writer = new FileOutputStream(SAVE_FILE)) {
+
+            ObjectOutputStream oos = new ObjectOutputStream(writer);
+            oos.writeObject(data);
+
+        } catch (IOException e) {
+            System.err.println("Problems occured while trying to save data to the data file!");
+        }
     }
 
     // deal with files : save the array of leaderboard elements and load it

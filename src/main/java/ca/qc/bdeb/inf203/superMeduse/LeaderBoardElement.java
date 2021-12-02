@@ -1,6 +1,8 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
-public class LeaderBoardElement {
+import java.io.Serializable;
+
+public class LeaderBoardElement implements Serializable {
 
     private String name;
     private int score;
