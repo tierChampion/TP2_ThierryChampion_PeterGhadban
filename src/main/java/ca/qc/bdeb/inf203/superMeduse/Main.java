@@ -9,12 +9,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -34,8 +32,8 @@ public class Main extends Application {
     private static final int WINDOW_HEIGHT = 480;
 
     private static Game game;
-    private static Scene HOME;
-    private static Scene SCORE;
+    private static ScoreBoard score;
+    private static Scene home;
 
     public static void main(String[] args) {
         launch(args);
@@ -47,10 +45,10 @@ public class Main extends Application {
         Jellyfish.buildBank();
 
         homePageScene(stage);
-        scoreScene(stage);
-        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, SCORE);
+        score = new ScoreBoard(WINDOW_WIDTH, WINDOW_HEIGHT, stage, home);
+        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score);
 
-        stage.setScene(HOME);
+        stage.setScene(home);
         stage.getIcons().add(new Image("meduse4.png"));
         stage.setTitle("Super Méduse Bros");
         stage.setResizable(false);
@@ -65,7 +63,7 @@ public class Main extends Application {
 
         // Scene and root
         var root = new StackPane();
-        HOME = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        home = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         // Canvas for background color
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -86,7 +84,7 @@ public class Main extends Application {
             game.startGame();
         });
         toScores.setOnAction((e) -> {
-            stage.setScene(SCORE);
+            score.accessScoreScene(false);
         });
 
         visuals.getChildren().addAll(backgroundImg, toGame, toScores);
@@ -94,42 +92,5 @@ public class Main extends Application {
         visuals.setSpacing(20);
         root.getChildren().addAll(canvas, visuals);
         root.setPadding(new Insets(40));
-    }
-
-    /**
-     * Creates the scene used to show the high scores.
-     * @see <a href="https://devstory.net/11063/javafx-listview">...</a> -> source for ListView
-     * @param stage
-     */
-    private static void scoreScene(Stage stage) {
-        var root = new VBox();
-        SCORE = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        var title = new Text("Meilleurs scores");
-        title.setFont(Font.font(40));
-
-        var scores = new ListView<>();
-        // load elements from file TODO
-
-        var nameTag = new Text("Nom:");
-        var nameEntry = new TextField();
-        var save = new Button("Sauvegarder");
-
-        var saveScore = new HBox(nameTag, nameEntry, save);
-
-        var toHome = new Button("Retourner à l'accueil");
-
-        var options = new VBox(saveScore, toHome);
-        options.setSpacing(20);
-        options.setAlignment(Pos.CENTER);
-
-        toHome.setOnAction((e) -> {
-            stage.setScene(HOME);
-        });
-
-        root.getChildren().addAll(title, scores, options);
-        root.setAlignment(Pos.TOP_CENTER);
-        root.setSpacing(20);
-        root.setPadding(new Insets(20));
     }
 }

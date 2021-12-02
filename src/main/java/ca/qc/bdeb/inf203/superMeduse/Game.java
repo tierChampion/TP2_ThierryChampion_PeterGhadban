@@ -22,13 +22,12 @@ import java.util.Random;
 
 public class Game {
     // Constants
-    private final double WINDOW_WIDTH;
-    private final double WINDOW_HEIGHT;
+    private final double WINDOW_WIDTH, WINDOW_HEIGHT;
     private static final double BUBBLE_CLUSTER_DELTA = 20, BUBBLE_CLUSTER_COUNT = 3, BUBBLE_CLUSTER_SIZE = 5;
     // Visual interface
     private final Stage stage;
-    private Scene game;
-    private final Scene results;
+    private Scene scene;
+    private final ScoreBoard results;
     private GraphicsContext context;
     private Text score;
     private Text deathMessage;
@@ -45,7 +44,7 @@ public class Game {
     // Utility
     private Random rng;
 
-    public Game(double windowW, double windowH, Stage stage, Scene results) {
+    public Game(double windowW, double windowH, Stage stage, ScoreBoard results) {
 
         WINDOW_WIDTH = windowW;
         WINDOW_HEIGHT = windowH;
@@ -62,7 +61,7 @@ public class Game {
     public void startGame() {
         init();
         initGameLoop();
-        stage.setScene(game);
+        stage.setScene(scene);
         timer.start();
     }
 
@@ -79,7 +78,8 @@ public class Game {
      */
     private void exitGame() {
         deathMessage.setVisible(false);
-        stage.setScene(results);
+        results.accessScoreScene(true);
+        results.setCurrentScore(Integer.parseInt(score.getText().split("px")[0]));
         timer.stop();
     }
 
@@ -250,7 +250,7 @@ public class Game {
      */
     private void gameScene() {
         var root = new StackPane();
-        game = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         var canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.score = new Text("0px");
         score.setFill(Color.WHITE);
@@ -264,14 +264,14 @@ public class Game {
         texts.setSpacing(150);
         root.getChildren().addAll(canvas, texts);
 
-        game.setOnKeyPressed((e) -> {
+        scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
             else {
                 Input.setKeyPressed(e.getCode(), true);
             }
         });
 
-        game.setOnKeyReleased((e) -> {
+        scene.setOnKeyReleased((e) -> {
 
             Input.setKeyPressed(e.getCode(), false);
         });
