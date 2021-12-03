@@ -169,6 +169,7 @@ public class Game {
         for (Bubble b : bubbles) {
             b.update(deltaTime);
         }
+        if (!debugMode)
         camera.update(deltaTime);
         camera.adjustUpwards(player);
 
@@ -203,9 +204,11 @@ public class Game {
 
     private void updateInformation() {
         score.setText(-(int) camera.getY() + "px");
-        debugInfo.setText("Position = (" + player.getX() + ", " + player.getY() + ")\n" +
-                "Vitesse = (" + player.getVx() + ", " + player.getVy() + ")\n" +
-                "Accélération = (" + player.getAx() + ", " + player.getAy() + ")\n" +
+        if (debugMode) debugInfo.setVisible(true);
+        else debugInfo.setVisible(false);
+        debugInfo.setText("Position = (" + (int)player.getX() + ", " + (int)player.getY() + ")\n" +
+                "Vitesse = (" + (int)player.getVx() + ", " + (int)player.getVy() + ")\n" +
+                "Accélération = (" + (int)player.getAx() + ", " + (int)player.getAy() + ")\n" +
                 "Touche au sol? " + (player.getGrounded() ? "oui" : "non"));
     }
 
