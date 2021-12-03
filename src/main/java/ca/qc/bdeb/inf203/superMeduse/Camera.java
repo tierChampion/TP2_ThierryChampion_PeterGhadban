@@ -16,6 +16,10 @@ public class Camera {
         this.ay = ay;
     }
 
+    /**
+     * Updates all physical properties depending on the elapsed time
+     * @param deltaTime represents the elapsed time
+     */
     public void update(double deltaTime) {
         vy += ay * deltaTime;
         y += vy * deltaTime;

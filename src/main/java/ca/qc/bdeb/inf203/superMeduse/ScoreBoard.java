@@ -44,6 +44,9 @@ public class ScoreBoard {
         updateListView();
     }
 
+    /**
+     * Creates the ScoreBoard scene
+     */
     private void scoreScene() {
         var root = new VBox();
         this.scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);

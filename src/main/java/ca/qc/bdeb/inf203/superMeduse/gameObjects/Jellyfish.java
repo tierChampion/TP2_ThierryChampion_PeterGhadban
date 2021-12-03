@@ -32,6 +32,10 @@ public class Jellyfish extends GameObject {
         super(x, y, vx, vy, ax, GRAVITY, w, h, maxX, color);
     }
 
+    /**
+     * Updates all physical properties of the Jelly depending on the elapsed time
+     * @param deltaTime elapsed time
+     */
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
@@ -97,6 +101,12 @@ public class Jellyfish extends GameObject {
         isGrounded = false;
     }
 
+    /**
+     *
+     * @param context is the context hat is used to render the jellyfish
+     * @param camera is used to render the jelly fish in the visible area
+     * @param debug is used to render a hitbox for the jellyfish when in debug mode
+     */
     @Override
     public void render(GraphicsContext context, Camera camera, boolean debug) {
         if (debug) {

@@ -55,6 +55,7 @@ public class Game {
      * @param windowH represents the Window Height
      * @param stage is the stage that will be used to display the game
      * @param results represents the current scoreboard and will be used to add new scores
+     * @param home is used to return to the homepage when escape is pressed
      */
     public Game(double windowW, double windowH, Stage stage, ScoreBoard results, Scene home) {
 
@@ -315,7 +316,7 @@ public class Game {
                 deathTime = 0;
                 stage.setScene(home);
                 timer.stop();
-                deathMessage.setVisible(false);
+                deathMessage.setVisible(false); //Resetting all game variables and returning to home page
             }
             else {
                 Input.setKeyPressed(e.getCode(), true);

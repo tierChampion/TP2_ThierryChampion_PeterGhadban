@@ -15,6 +15,12 @@ public class Bubble extends GameObject{
                 Color.rgb(0, 0, 255, 0.4));
     }
 
+    /**
+     * Renders the bubble
+     * @param context is the context that will be used to render the bubble
+     * @param camera is used to render the bubble at the right spot compared to the camera
+     * @param debug is only used in other GameObjects
+     */
     @Override
     public void render(GraphicsContext context, Camera camera, boolean debug) {
         context.setFill(color);

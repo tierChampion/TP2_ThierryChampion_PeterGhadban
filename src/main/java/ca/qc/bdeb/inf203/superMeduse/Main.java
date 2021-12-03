@@ -21,7 +21,7 @@ public class Main extends Application {
 
     /*
     TODO:
-    - Add inputs for escape in every scene (move debug mode boolean outside of game?)
+
      */
 
     private static final int WINDOW_WIDTH = 350;
@@ -37,13 +37,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // FAIRE RESOURCE MANAGER
-        Jellyfish.buildBank();
 
-        homePageScene();
-        score = new ScoreBoard(WINDOW_WIDTH, WINDOW_HEIGHT, stage, home);
-        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score, home);
-
+        createResources(stage);
         stage.setScene(home);
         stage.getIcons().add(new Image("meduse4.png"));
         stage.setTitle("Super Méduse Bros");
@@ -93,5 +88,17 @@ public class Main extends Application {
         visuals.setSpacing(20);
         root.getChildren().addAll(canvas, visuals);
         root.setPadding(new Insets(40));
+    }
+
+    /**
+     * Creates Resources
+     * @param stage is used to create the scoreBoard and the game
+     */
+    private void createResources(Stage stage){
+        Jellyfish.buildBank();
+
+        homePageScene();
+        score = new ScoreBoard(WINDOW_WIDTH, WINDOW_HEIGHT, stage, home);
+        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score, home);
     }
 }

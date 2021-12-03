@@ -30,12 +30,22 @@ public abstract class GamePlatform extends GameObject {
         jelly.setVy(0);
     }
 
+    /**
+     * Renders platforms
+     * @param context is the context used to render the platform
+     * @param camera is used to render the platform correctly in the visible area
+     * @param debug is used to change the color of a platform when needed in the debug mode
+     */
     @Override
     public void render(GraphicsContext context, Camera camera, boolean debug) {
         context.setFill(debug && jellyOnMe ? Color.YELLOW : color);
         context.fillRect(x, camera.getScreenY(y), width, height);
     }
 
+    /**
+     * Sets whether or not the player is on the platform
+     * @param jellyOnMe is the value that jellyOnMe will become
+     */
     public void setJellyOnMe(boolean jellyOnMe) {
         this.jellyOnMe = jellyOnMe;
     }

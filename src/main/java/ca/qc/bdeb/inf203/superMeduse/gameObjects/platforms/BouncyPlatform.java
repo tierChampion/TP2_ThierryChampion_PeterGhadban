@@ -13,8 +13,8 @@ public class BouncyPlatform extends GamePlatform {
     }
 
     /**
-     * Makes the jellyfish bounce of the platform
-     * @param jelly jellyfish to apply the effect on
+     * Makes the jellyfish bounce off the platform
+     * @param jelly jellyfish on which the effect will be apllied
      */
     public void effect(Jellyfish jelly){
         jelly.setVy(Math.min(jelly.getVy() * -1.5, BOUNCY_STRENGTH));
