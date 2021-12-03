@@ -21,7 +21,7 @@ public class Main extends Application {
     /*
     TODO:
     - Make so only the stepped on platform becomes yellow (add a parameter to platform)
-    - Add inputs for escape and t (debug mode) in every scene
+    - Add inputs for escape and t (debug mode) in every scene (move debug mode boolean outside of game?)
      */
 
     private static final int WINDOW_WIDTH = 350;
