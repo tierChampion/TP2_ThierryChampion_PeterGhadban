@@ -82,9 +82,7 @@ public class ScoreBoard {
         root.setSpacing(20);
         root.setPadding(new Insets(20));
 
-        scene.setOnKeyPressed((e) -> {
-            if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
-        });
+
     }
 
     // https://stackoverflow.com/questions/51542291/how-to-sort-by-key-in-java
