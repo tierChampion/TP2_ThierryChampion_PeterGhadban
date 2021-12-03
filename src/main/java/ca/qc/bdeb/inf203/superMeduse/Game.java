@@ -154,11 +154,7 @@ public class Game {
                     camera.update(deltaTime);
                     camera.adjustUpwards(player);
 
-                    // Rendering
-                    for (Bubble b : bubbles) b.render(context, camera, debugMode);
 
-                    for (GamePlatform p : platforms) p.render(context, camera, debugMode);
-                    player.render(context, camera, debugMode);
 
                     // Out of bounds
                     int p = 0;
@@ -187,6 +183,12 @@ public class Game {
 
                     if (camera.isNotVisible(player)) endGame();
                     updateInformation();
+
+                    // Rendering
+                    for (Bubble bubble : bubbles) bubble.render(context, camera, debugMode);
+
+                    for (GamePlatform platform : platforms) platform.render(context, camera, debugMode);
+                    player.render(context, camera, debugMode);
                 }
 
                 lastTime = now;
