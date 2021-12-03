@@ -42,6 +42,8 @@ public class Game {
     // Game data variables
     private final double[] highestPlatform = new double[]{0};
     private boolean isGameDone;
+    private double deathTime = 0;
+    private double bubbleTime = 0;
     private boolean debugMode = false;
     // Utility
     private Random rng;
@@ -111,8 +113,6 @@ public class Game {
         this.timer = new AnimationTimer() {
 
             private long lastTime = 0;
-            private double deathTime = 0;
-            private double bubbleTime = 0;
 
             @Override
             public void handle(long now) {
@@ -135,65 +135,74 @@ public class Game {
                         exitGame();
                     }
                 } else {
-                    bubbleTime += deltaTime;
-                    // Background
-                    context.setFill(Color.DARKBLUE);
-                    context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-                    // Updating
-                    player.manageInputs();
-                    if (Input.isKeyPressed(KeyCode.T)) debugMode = !debugMode;
-                    player.update(deltaTime);
-                    for (GamePlatform p : platforms) {
-                        p.update(deltaTime);
-                        player.touchPlatform(p);
-                    }
-                    for (Bubble b : bubbles) {
-                        b.update(deltaTime);
-                    }
-                    camera.update(deltaTime);
-                    camera.adjustUpwards(player);
-
-
-
-                    // Out of bounds
-                    int p = 0;
-                    while (p < platforms.size()) {
-                        if (camera.isNotVisible(platforms.get(p))) {
-                            platforms.remove(p);
-                        } else {
-                            p++;
-                        }
-                    }
-
-                    int b = 0;
-                    while (b < bubbles.size()) {
-                        if (camera.isNotVisible(bubbles.get(b))) {
-                            bubbles.remove(b);
-                        } else {
-                            b++;
-                        }
-                    }
-
-                    if (camera.getY() < highestPlatform[0] + GamePlatform.PLATFORM_THICKNESS) addPlatform();
-                    if (bubbleTime >= 3) {
-                        addBubbles();
-                        bubbleTime = 0;
-                    }
-
+                    update(deltaTime);
                     if (camera.isNotVisible(player)) endGame();
-                    updateInformation();
-
                     // Rendering
-                    for (Bubble bubble : bubbles) bubble.render(context, camera, debugMode);
-
-                    for (GamePlatform platform : platforms) platform.render(context, camera, debugMode);
-                    player.render(context, camera, debugMode);
+                    render();
                 }
 
                 lastTime = now;
             }
         };
+    }
+
+    private void render(){
+
+        // Background
+        context.setFill(Color.DARKBLUE);
+        context.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        //Bubbles
+        for (Bubble bubble : bubbles) bubble.render(context, camera, debugMode);
+        //Platforms
+        for (GamePlatform platform : platforms) platform.render(context, camera, debugMode);
+        player.render(context, camera, debugMode);
+    }
+
+    private void update(double deltaTime){
+
+        bubbleTime += deltaTime;
+        // Updating
+        player.manageInputs();
+        if (Input.isKeyPressed(KeyCode.T)) debugMode = !debugMode;
+        player.update(deltaTime);
+        for (GamePlatform p : platforms) {
+            p.update(deltaTime);
+            player.touchPlatform(p);
+        }
+        for (Bubble b : bubbles) {
+            b.update(deltaTime);
+        }
+        camera.update(deltaTime);
+        camera.adjustUpwards(player);
+
+
+
+        // Out of bounds
+        int p = 0;
+        while (p < platforms.size()) {
+            if (camera.isNotVisible(platforms.get(p))) {
+                platforms.remove(p);
+            } else {
+                p++;
+            }
+        }
+
+        int b = 0;
+        while (b < bubbles.size()) {
+            if (camera.isNotVisible(bubbles.get(b))) {
+                bubbles.remove(b);
+            } else {
+                b++;
+            }
+        }
+
+        if (camera.getY() < highestPlatform[0] + GamePlatform.PLATFORM_THICKNESS) addPlatform();
+        if (bubbleTime >= 3) {
+            addBubbles();
+            bubbleTime = 0;
+        }
+        updateInformation();
     }
 
     private void updateInformation() {
