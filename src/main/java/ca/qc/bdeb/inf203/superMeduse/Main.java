@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,8 +21,7 @@ public class Main extends Application {
 
     /*
     TODO:
-    - Make so only the stepped on platform becomes yellow (add a parameter to platform)
-    - Add inputs for escape and t (debug mode) in every scene (move debug mode boolean outside of game?)
+    - Add inputs for escape in every scene (move debug mode boolean outside of game?)
      */
 
     private static final int WINDOW_WIDTH = 350;
@@ -80,6 +80,12 @@ public class Main extends Application {
         });
         toScores.setOnAction((e) -> {
             score.accessScoreScene(false);
+        });
+        home.setOnKeyPressed((e) -> {
+            if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
+            else {
+                Input.setKeyPressed(e.getCode(), true);
+            }
         });
 
         visuals.getChildren().addAll(backgroundImg, toGame, toScores);

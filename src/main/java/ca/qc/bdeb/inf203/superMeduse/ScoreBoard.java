@@ -1,11 +1,13 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -76,6 +78,10 @@ public class ScoreBoard {
         root.setAlignment(Pos.TOP_CENTER);
         root.setSpacing(20);
         root.setPadding(new Insets(20));
+
+        scene.setOnKeyPressed((e) -> {
+            if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
+        });
     }
 
     // https://stackoverflow.com/questions/51542291/how-to-sort-by-key-in-java

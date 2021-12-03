@@ -158,6 +158,7 @@ public class Game {
     private void update(double deltaTime){
 
         bubbleTime += deltaTime;
+
         // Updating
         player.manageInputs();
         if (Input.isKeyPressed(KeyCode.T)) debugMode = !debugMode;
@@ -204,8 +205,7 @@ public class Game {
 
     private void updateInformation() {
         score.setText(-(int) camera.getY() + "px");
-        if (debugMode) debugInfo.setVisible(true);
-        else debugInfo.setVisible(false);
+        debugInfo.setVisible(debugMode);
         debugInfo.setText("Position = (" + (int)player.getX() + ", " + (int)player.getY() + ")\n" +
                 "Vitesse = (" + (int)player.getVx() + ", " + (int)player.getVy() + ")\n" +
                 "Accélération = (" + (int)player.getAx() + ", " + (int)player.getAy() + ")\n" +
@@ -298,10 +298,7 @@ public class Game {
             }
         });
 
-        scene.setOnKeyReleased((e) -> {
-
-            Input.setKeyPressed(e.getCode(), false);
-        });
+        scene.setOnKeyReleased((e) -> Input.setKeyPressed(e.getCode(), false));
 
         context = canvas.getGraphicsContext2D();
     }
