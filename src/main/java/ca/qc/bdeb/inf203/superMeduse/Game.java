@@ -36,7 +36,7 @@ public class Game {
     private Camera camera;
     private AnimationTimer timer;
     // Game entities
-    private Jellyfish player;
+    public Jellyfish player;
     private ArrayList<GamePlatform> platforms;
     private ArrayList<Bubble> bubbles;
     // Game data variables
@@ -121,13 +121,10 @@ public class Game {
                     lastTime = now;
                     return;
                 }
-
                 double deltaTime = (now - lastTime) * 1e-9;
 
                 if (isGameDone) {
-
                     deathTime += deltaTime;
-
                     if (deathTime >= 3) {
                         lastTime = 0;
                         deathTime = 0;
@@ -140,7 +137,6 @@ public class Game {
                     // Rendering
                     render();
                 }
-
                 lastTime = now;
             }
         };

@@ -67,8 +67,11 @@ public class Jellyfish extends GameObject {
             y + height > p.y && y + (vy > HIGH_SPEED ? 0 : height) < p.y + p.height) {
                 p.effect(this);
                 isGrounded = true;
+                p.setJellyOnMe(true);
             }
         }
+        else
+            p.setJellyOnMe(false);
     }
 
     /**
