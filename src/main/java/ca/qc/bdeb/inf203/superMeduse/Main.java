@@ -42,7 +42,7 @@ public class Main extends Application {
 
         homePageScene();
         score = new ScoreBoard(WINDOW_WIDTH, WINDOW_HEIGHT, stage, home);
-        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score);
+        game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT, stage, score, home);
 
         stage.setScene(home);
         stage.getIcons().add(new Image("meduse4.png"));

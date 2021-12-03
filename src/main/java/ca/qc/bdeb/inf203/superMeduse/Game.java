@@ -45,13 +45,22 @@ public class Game {
     private double deathTime = 0;
     private double bubbleTime = 0;
     private boolean debugMode = false;
+    private Scene home;
     // Utility
     private Random rng;
 
-    public Game(double windowW, double windowH, Stage stage, ScoreBoard results) {
+    /**
+     * Constructs the Game
+     * @param windowW reprensents the Window Width
+     * @param windowH represents the Window Height
+     * @param stage is the stage that will be used to display the game
+     * @param results represents the current scoreboard and will be used to add new scores
+     */
+    public Game(double windowW, double windowH, Stage stage, ScoreBoard results, Scene home) {
 
         WINDOW_WIDTH = windowW;
         WINDOW_HEIGHT = windowH;
+        this.home = home;
         rng = new Random();
         this.stage = stage;
         this.results = results;
@@ -80,6 +89,8 @@ public class Game {
      * Used to manage the scene change after death
      */
     private void exitGame() {
+        deathTime = 0;
+        bubbleTime = 0;
         deathMessage.setVisible(false);
         results.accessScoreScene(true);
         results.setCurrentScore(Integer.parseInt(score.getText().split("px")[0]));
@@ -126,9 +137,6 @@ public class Game {
                 if (isGameDone) {
                     deathTime += deltaTime;
                     if (deathTime >= 3) {
-                        lastTime = 0;
-                        deathTime = 0;
-                        bubbleTime = 0;
                         exitGame();
                     }
                 } else {
@@ -142,6 +150,9 @@ public class Game {
         };
     }
 
+    /**
+     * renders all visual elements in the game
+     */
     private void render(){
 
         // Background
@@ -155,6 +166,10 @@ public class Game {
         player.render(context, camera, debugMode);
     }
 
+    /**
+     * Updates all moving elements in the game an removes any object that isn't visible anymore
+     * @param deltaTime needed to correctly update the elements' movement properties
+     */
     private void update(double deltaTime){
 
         bubbleTime += deltaTime;
@@ -203,6 +218,9 @@ public class Game {
         updateInformation();
     }
 
+    /**
+     * Updates all the informations that are displayed when in debug mode
+     */
     private void updateInformation() {
         score.setText(-(int) camera.getY() + "px");
         debugInfo.setVisible(debugMode);
@@ -292,7 +310,13 @@ public class Game {
         root.setAlignment(Pos.TOP_LEFT);
 
         scene.setOnKeyPressed((e) -> {
-            if (e.getCode() == KeyCode.ESCAPE) Platform.exit();
+            if (e.getCode() == KeyCode.ESCAPE){
+                bubbleTime = 0;
+                deathTime = 0;
+                stage.setScene(home);
+                timer.stop();
+                deathMessage.setVisible(false);
+            }
             else {
                 Input.setKeyPressed(e.getCode(), true);
             }
