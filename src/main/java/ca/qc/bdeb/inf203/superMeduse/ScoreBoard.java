@@ -85,7 +85,11 @@ public class ScoreBoard {
 
     }
 
-    // https://stackoverflow.com/questions/51542291/how-to-sort-by-key-in-java
+    /**
+     * Saves the record of the game that juse ended
+     * @param entry is the TextField that contains the name of the player
+     * source: https://stackoverflow.com/questions/51542291/how-to-sort-by-key-in-java
+     */
     private void saveRecord(TextField entry) {
 
         data.add(new LeaderBoardElement(entry.getText(), currentScore));
@@ -97,6 +101,9 @@ public class ScoreBoard {
         saveToFile();
     }
 
+    /**
+     * Updates the names and scores on the leaderboard
+     */
     private void updateListView() {
         leaderBoard.getItems().clear();
         for (int i = 0; i < data.size(); i++) {
@@ -104,6 +111,10 @@ public class ScoreBoard {
         }
     }
 
+    /**
+     *
+     * @param onDeath decides whether you can enter a name and score or not
+     */
     public void accessScoreScene(boolean onDeath) {
         STAGE.setScene(scene);
         scoreEntry.setVisible(onDeath);
@@ -113,6 +124,9 @@ public class ScoreBoard {
         this.currentScore = newScore;
     }
 
+    /**
+     * Loads the file containing the leaderboard so that we can access it
+     */
     public void loadFromFile() {
 
         try (FileInputStream reader = new FileInputStream(SAVE_FILE)) {
@@ -128,6 +142,9 @@ public class ScoreBoard {
         }
     }
 
+    /**
+     * Saves all data into the file so that the leaderboard isn't lost between executions
+     */
     private void saveToFile() {
 
         try (FileOutputStream writer = new FileOutputStream(SAVE_FILE)) {
