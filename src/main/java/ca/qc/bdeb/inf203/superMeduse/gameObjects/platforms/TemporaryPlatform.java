@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 
 public class TemporaryPlatform extends GamePlatform {
 
+    private static final Color TEMPORARY_COLOR = Color.BLACK;
+
     private static final double FALL_SPEED = 200;
     private boolean lastUsed = false; // is stepping on plat
     private boolean used = false; // ever stepped on plat
@@ -12,7 +14,7 @@ public class TemporaryPlatform extends GamePlatform {
 
     public TemporaryPlatform(double x, double y,
                              double w){
-        super(x, y, w, Color.BLACK);
+        super(x, y, w, TEMPORARY_COLOR);
     }
 
     /**

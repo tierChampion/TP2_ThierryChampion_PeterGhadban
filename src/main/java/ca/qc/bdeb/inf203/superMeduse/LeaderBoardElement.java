@@ -2,6 +2,9 @@ package ca.qc.bdeb.inf203.superMeduse;
 
 import java.io.Serializable;
 
+/**
+ * Used to store the data of a single score.
+ */
 public class LeaderBoardElement implements Serializable {
 
     private String name;

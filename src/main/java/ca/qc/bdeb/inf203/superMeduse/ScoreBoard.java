@@ -1,13 +1,11 @@
 package ca.qc.bdeb.inf203.superMeduse;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,6 +19,10 @@ import java.util.Comparator;
 public class ScoreBoard {
 
     private static final String SAVE_FILE = "scoreboard.dat";
+    // Visual parameters
+    private static final Font SCORE_FONT = Font.font(40);
+    private static final int SCORE_SPACING = 20;
+    private static final Insets SCORE_PADDING = new Insets(20);
 
     private final double WINDOW_WIDTH, WINDOW_HEIGHT;
     // Visual components
@@ -52,7 +54,7 @@ public class ScoreBoard {
         this.scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         var title = new Text("Meilleurs scores");
-        title.setFont(Font.font(40));
+        title.setFont(SCORE_FONT);
 
         this.leaderBoard = new ListView<>();
         loadFromFile();
@@ -66,7 +68,7 @@ public class ScoreBoard {
         var toHome = new Button("Retourner à l'accueil");
 
         var options = new VBox(scoreEntry, toHome);
-        options.setSpacing(20);
+        options.setSpacing(SCORE_SPACING);
         options.setAlignment(Pos.CENTER);
 
         toHome.setOnAction((e) -> {
@@ -79,10 +81,8 @@ public class ScoreBoard {
 
         root.getChildren().addAll(title, leaderBoard, options);
         root.setAlignment(Pos.TOP_CENTER);
-        root.setSpacing(20);
-        root.setPadding(new Insets(20));
-
-
+        root.setSpacing(SCORE_SPACING);
+        root.setPadding(SCORE_PADDING);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ScoreBoard {
     }
 
     /**
-     *
+     * Sets the scene of the stage to the score board
      * @param onDeath decides whether you can enter a name and score or not
      */
     public void accessScoreScene(boolean onDeath) {
@@ -125,9 +125,9 @@ public class ScoreBoard {
     }
 
     /**
-     * Loads the file containing the leaderboard so that we can access it
+     * Loads the file containing the leaderboard
      */
-    public void loadFromFile() {
+    private void loadFromFile() {
 
         try (FileInputStream reader = new FileInputStream(SAVE_FILE)) {
 
@@ -143,7 +143,7 @@ public class ScoreBoard {
     }
 
     /**
-     * Saves all data into the file so that the leaderboard isn't lost between executions
+     * Saves all data into the file to keep the leaderboard between executions
      */
     private void saveToFile() {
 
@@ -156,6 +156,4 @@ public class ScoreBoard {
             System.err.println("Problems occured while trying to save data to the data file!");
         }
     }
-
-    // deal with files : save the array of leaderboard elements and load it
 }

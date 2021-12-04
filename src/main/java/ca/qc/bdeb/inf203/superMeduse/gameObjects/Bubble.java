@@ -9,10 +9,12 @@ public class Bubble extends GameObject{
     public static final double MAX_DIAMETER = 40, MIN_DIAMETER = 10;
     public static final double MAX_SPEED = -450, MIN_SPEED = -350;
 
+    private static final Color BUBBLE_COLOR =  Color.rgb(0, 0, 255, 0.4);
+
     public Bubble(double x, double y,
                   double vy, double diameter){
         super(x, y, 0.00, vy, 0, 0, diameter, diameter, 0,
-                Color.rgb(0, 0, 255, 0.4));
+                BUBBLE_COLOR);
     }
 
     /**
@@ -23,7 +25,7 @@ public class Bubble extends GameObject{
      */
     @Override
     public void render(GraphicsContext context, Camera camera, boolean debug) {
-        context.setFill(color);
+        context.setFill(BUBBLE_COLOR);
         context.fillOval(x, camera.getScreenY(y), width, height);
     }
 }

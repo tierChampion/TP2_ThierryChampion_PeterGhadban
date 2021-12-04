@@ -5,15 +5,17 @@ import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 
 public class Camera {
 
+    private static final double ADJUSTMENT_PERCENTAGE = 0.75;
+    private static final double AY = -2;
+
     private final double HEIGHT;
     private double y;
-    private double vy, ay;
+    private double vy;
 
-    public Camera(double h, double y, double vy, double ay) {
+    public Camera(double h, double y, double vy) {
         this.HEIGHT = h;
         this.y = y;
         this.vy = vy;
-        this.ay = ay;
     }
 
     /**
@@ -21,7 +23,7 @@ public class Camera {
      * @param deltaTime represents the elapsed time
      */
     public void update(double deltaTime) {
-        vy += ay * deltaTime;
+        vy += AY * deltaTime;
         y += vy * deltaTime;
     }
 
@@ -30,9 +32,9 @@ public class Camera {
      * @param jelly
      */
     public void adjustUpwards(Jellyfish jelly) {
-        double maxJellyHeight = y + HEIGHT / 4;
+        double maxJellyHeight = y + HEIGHT * (1 - ADJUSTMENT_PERCENTAGE);
         if (jelly.getY() < maxJellyHeight) {
-            y = jelly.getY() - HEIGHT / 4;
+            y = jelly.getY() - HEIGHT * (1 - ADJUSTMENT_PERCENTAGE);
         }
     }
 

@@ -19,13 +19,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    /*
-    TODO:
-
-     */
-
     private static final int WINDOW_WIDTH = 350;
     private static final int WINDOW_HEIGHT = 480;
+
+    private static final Font HOME_FONT = Font.font(15);
+    private static final int HOME_SPACING = 20;
+    private static final Insets HOME_PADDING = new Insets(40);
 
     private static Game game;
     private static ScoreBoard score;
@@ -65,9 +64,9 @@ public class Main extends Application {
         var visuals = new VBox();
         var backgroundImg = new ImageView("accueil.png");
         var toGame = new Button("Jouer!");
-        toGame.setFont(Font.font(15));
+        toGame.setFont(HOME_FONT);
         var toScores = new Button("Meilleurs scores");
-        toScores.setFont(Font.font(15));
+        toScores.setFont(HOME_FONT);
 
         // Events
         toGame.setOnAction((e) -> {
@@ -85,9 +84,9 @@ public class Main extends Application {
 
         visuals.getChildren().addAll(backgroundImg, toGame, toScores);
         visuals.setAlignment(Pos.BASELINE_CENTER);
-        visuals.setSpacing(20);
+        visuals.setSpacing(HOME_SPACING);
         root.getChildren().addAll(canvas, visuals);
-        root.setPadding(new Insets(40));
+        root.setPadding(HOME_PADDING);
     }
 
     /**

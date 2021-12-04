@@ -19,6 +19,8 @@ public class Jellyfish extends GameObject {
     private static final int FRAME_PER_IMAGE = 8;
     private static final int IMAGE_COUNT = 6;
 
+    public static final double JELLY_WIDTH = 50, JELLY_HEIGHT = 50;
+
     private int counter = 0;
     private int phase = 1;
     private int direction = 1;
@@ -27,9 +29,8 @@ public class Jellyfish extends GameObject {
     public Jellyfish(double x, double y,
                      double vx, double vy,
                      double ax,
-                     double w, double h,
                      double maxX, Color color) {
-        super(x, y, vx, vy, ax, GRAVITY, w, h, maxX, color);
+        super(x, y, vx, vy, ax, GRAVITY, JELLY_WIDTH, JELLY_HEIGHT, maxX, color);
     }
 
     /**
@@ -55,7 +56,7 @@ public class Jellyfish extends GameObject {
      * Describes how the jellyfish reacts to touching a wall.
      */
     public void touchWall() {
-        x = Math.min(Math.max(x, 0), maxX - width);
+        x = Math.min(Math.max(x, 0), maxX - JELLY_WIDTH);
         vx *= -0.9;
         ax *= -0.8;
         direction *= -1;
@@ -67,8 +68,8 @@ public class Jellyfish extends GameObject {
      */
     public void touchPlatform(GamePlatform p) {
         if (vy > 0) {
-            if (x < p.x + p.width && x + width > p.x &&
-            y + height > p.y && y + (vy > HIGH_SPEED ? 0 : height) < p.y + p.height) {
+            if (x < p.x + p.width && x + JELLY_WIDTH > p.x &&
+            y + JELLY_HEIGHT > p.y && y + (vy > HIGH_SPEED ? 0 : JELLY_HEIGHT) < p.y + p.height) {
                 p.effect(this);
                 isGrounded = true;
                 p.setJellyOnMe(true);
@@ -111,10 +112,10 @@ public class Jellyfish extends GameObject {
     public void render(GraphicsContext context, Camera camera, boolean debug) {
         if (debug) {
             context.setFill(Color.rgb(255, 0, 0, 0.5));
-            context.fillRect(x, camera.getScreenY(y), width, height);
+            context.fillRect(x, camera.getScreenY(y), JELLY_WIDTH, JELLY_HEIGHT);
         }
         context.drawImage(IMAGE_BANK.get(phase * direction),x, camera.getScreenY(y),
-                width, height);
+                JELLY_WIDTH, JELLY_HEIGHT);
     }
 
     public boolean getGrounded() {return isGrounded;}

@@ -10,9 +10,11 @@ import javafx.scene.paint.Color;
  * Represents a platform in the game.
  */
 public abstract class GamePlatform extends GameObject {
+
     private boolean jellyOnMe;
 
     public static final double PLATFORM_THICKNESS = 10;
+    public static final double MAX_LENGTH = 175, MIN_LENGTH = 85;
 
     public GamePlatform(double x, double y,
                         double w, Color color) {

@@ -9,14 +9,14 @@ import java.util.HashMap;
  */
 public class Input {
 
-    private static HashMap<KeyCode, Boolean> touches = new HashMap<>();
+    private static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 
     public static boolean isKeyPressed(KeyCode code) {
-        return touches.getOrDefault(code, false);
+        return keys.getOrDefault(code, false);
     }
 
     public static void setKeyPressed(KeyCode code, boolean isPressed) {
-        touches.put(code, isPressed);
+        keys.put(code, isPressed);
     }
 
 }

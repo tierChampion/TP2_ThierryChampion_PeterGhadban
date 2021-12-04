@@ -4,7 +4,6 @@ import ca.qc.bdeb.inf203.superMeduse.gameObjects.Bubble;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.Jellyfish;
 import ca.qc.bdeb.inf203.superMeduse.gameObjects.platforms.*;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -22,8 +21,12 @@ import java.util.Random;
 
 public class Game {
     // Constants
+    private static final Font GAME_FONT = Font.font(40);
+    private static final double GAME_SPACING = 150;
     private final double WINDOW_WIDTH, WINDOW_HEIGHT;
     private static final double BUBBLE_CLUSTER_DELTA = 20, BUBBLE_CLUSTER_COUNT = 3, BUBBLE_CLUSTER_SIZE = 5;
+    private static final double BUBBLE_SPAWN_INTERVAL = 3, DEATH_TOTAL_TIME = 3;
+    private static final double PLATFORM_OFFSET = 100;
     // Visual interface
     private final Stage stage;
     private Scene scene;
@@ -87,13 +90,15 @@ public class Game {
     }
 
     /**
-     * Used to manage the scene change after death
+     * Used to manage the scene change
+     * @param onEscape if this method was accessed by the press of escape
      */
-    private void exitGame() {
+    private void exitGame(boolean onEscape) {
         deathTime = 0;
         bubbleTime = 0;
         deathMessage.setVisible(false);
-        results.accessScoreScene(true);
+        if (onEscape) stage.setScene(home);
+        else results.accessScoreScene(true);
         results.setCurrentScore(Integer.parseInt(score.getText().split("px")[0]));
         timer.stop();
     }
@@ -102,14 +107,15 @@ public class Game {
      * Initialises the entities and the game logic
      */
     private void init() {
-        camera = new Camera(WINDOW_HEIGHT, 0, 0, -2);
-        player = new Jellyfish((WINDOW_WIDTH - 50) / 2, WINDOW_HEIGHT - 150,
-                0, 0, 0, 50, 50, WINDOW_WIDTH, Color.RED);
+        camera = new Camera(WINDOW_HEIGHT, 0, 0);
+        player = new Jellyfish((WINDOW_WIDTH - Jellyfish.JELLY_WIDTH) / 2,
+                WINDOW_HEIGHT - PLATFORM_OFFSET - Jellyfish.JELLY_HEIGHT,
+                0, 0, 0, WINDOW_WIDTH, Color.RED);
         // Platform management
-        highestPlatform[0] = WINDOW_HEIGHT - 200;
+        highestPlatform[0] = WINDOW_HEIGHT - 2 * PLATFORM_OFFSET;
         platforms = new ArrayList<>();
-        platforms.add(new SimplePlatform((WINDOW_WIDTH - 175) / 2, WINDOW_HEIGHT - 100,
-                175));
+        platforms.add(new SimplePlatform((WINDOW_WIDTH - GamePlatform.MAX_LENGTH) / 2,
+                WINDOW_HEIGHT - PLATFORM_OFFSET, GamePlatform.MAX_LENGTH));
         addPlatform();
         addPlatform();
         addPlatform();
@@ -137,8 +143,8 @@ public class Game {
 
                 if (isGameDone) {
                     deathTime += deltaTime;
-                    if (deathTime >= 3) {
-                        exitGame();
+                    if (deathTime >= DEATH_TOTAL_TIME) {
+                        exitGame(false);
                     }
                 } else {
                     update(deltaTime);
@@ -175,7 +181,7 @@ public class Game {
 
         bubbleTime += deltaTime;
 
-        // Updating
+        // Updating objects
         player.manageInputs();
         if (Input.isKeyPressed(KeyCode.T)) debugMode = !debugMode;
         player.update(deltaTime);
@@ -190,9 +196,7 @@ public class Game {
         camera.update(deltaTime);
         camera.adjustUpwards(player);
 
-
-
-        // Out of bounds
+        // Removing objects if needed
         int p = 0;
         while (p < platforms.size()) {
             if (camera.isNotVisible(platforms.get(p))) {
@@ -211,8 +215,9 @@ public class Game {
             }
         }
 
+        // Adding objects if needed
         if (camera.getY() < highestPlatform[0] + GamePlatform.PLATFORM_THICKNESS) addPlatform();
-        if (bubbleTime >= 3) {
+        if (bubbleTime >= BUBBLE_SPAWN_INTERVAL) {
             addBubbles();
             bubbleTime = 0;
         }
@@ -236,32 +241,32 @@ public class Game {
      */
     private void addPlatform() {
         double type = rng.nextDouble();
-        double width = rng.nextDouble() * (175 - 85) + 85;
+        double width = rng.nextDouble() * (GamePlatform.MAX_LENGTH - GamePlatform.MIN_LENGTH) + GamePlatform.MIN_LENGTH;
         double x = rng.nextDouble() * (WINDOW_WIDTH - width);
 
-        if (type < 0.5) {
+        if (type < 0.5) { // 50% simple
             platforms.add(new SimplePlatform(
                     x,
                     highestPlatform[0],
                     width));
-        } else if (type < 0.7) {
+        } else if (type < 0.7) { // 20% moving
             platforms.add(new MovingPlatform(
                     x,
                     highestPlatform[0],
                     width));
-        } else if (type < 0.85) {
+        } else if (type < 0.85) { // 15% bouncy
             platforms.add(new BouncyPlatform(
                     x,
                     highestPlatform[0],
                     width));
-        } else {
+        } else { // 15% temporary
             platforms.add(new TemporaryPlatform(
                     x,
                     highestPlatform[0],
                     width));
         }
 
-        highestPlatform[0] -= 100;
+        highestPlatform[0] -= PLATFORM_OFFSET;
     }
 
     /**
@@ -294,15 +299,15 @@ public class Game {
 
         this.score = new Text();
         score.setFill(Color.WHITE);
-        score.setFont(Font.font(40));
+        score.setFont(GAME_FONT);
 
         this.deathMessage = new Text("Partie Terminée");
         deathMessage.setFill(Color.RED);
-        deathMessage.setFont(Font.font(40));
+        deathMessage.setFont(GAME_FONT);
         deathMessage.setVisible(false);
         var texts = new VBox(score, deathMessage);
         texts.setAlignment(Pos.TOP_CENTER);
-        texts.setSpacing(150);
+        texts.setSpacing(GAME_SPACING);
 
         debugInfo = new Text();
         debugInfo.setFill(Color.WHITE);
@@ -312,11 +317,7 @@ public class Game {
 
         scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE){
-                bubbleTime = 0;
-                deathTime = 0;
-                stage.setScene(home);
-                timer.stop();
-                deathMessage.setVisible(false); //Resetting all game variables and returning to home page
+                exitGame(true);
             }
             else {
                 Input.setKeyPressed(e.getCode(), true);

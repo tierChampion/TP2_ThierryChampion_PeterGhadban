@@ -4,11 +4,16 @@ import javafx.scene.paint.Color;
 
 public class MovingPlatform extends GamePlatform {
 
+    private static final Color MOVING_COLOR = Color.rgb(184, 15, 36);
+    private static final double PERIOD = 2;
+    private static final double AMPLITUDE = 100;
+
     private double totalTime;
     private double initialX;
+
     public MovingPlatform(double x, double y,
                           double w) {
-        super(x, y, w, Color.rgb(184, 15, 36));
+        super(x, y, w, MOVING_COLOR);
         this.initialX = x;
     }
 
@@ -19,7 +24,7 @@ public class MovingPlatform extends GamePlatform {
     public void update(double deltaTime){
         super.update(deltaTime);
         totalTime+=deltaTime;
-        x = initialX + Math.sin( 2 * totalTime ) * 100;
+        x = initialX + Math.sin( PERIOD * totalTime ) * AMPLITUDE;
     }
 }
 
